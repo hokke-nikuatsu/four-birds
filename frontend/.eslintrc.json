@@ -29,7 +29,7 @@
 		"Atomics": "readonly",
 		"SharedArrayBuffer": "readonly"
 	},
-	"ignorePatterns": ["lib", "node_modules"],
+	"ignorePatterns": ["lib", "build", "node_modules"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"sourceType": "module",

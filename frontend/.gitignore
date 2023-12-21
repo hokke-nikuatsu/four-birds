@@ -4,8 +4,9 @@
 # testing
 /coverage
 
-# production
+# compiled & builded files
 /lib
+/build
 
 # misc
 .DS_Store

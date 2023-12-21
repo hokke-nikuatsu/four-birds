@@ -29,6 +29,6 @@
 		"lint": "eslint --ext .ts,.js src",
 		"lint:fix": "run lint --fix",
 		"build": "tsc",
-		"start": "node lib/index.js"
+		"start": "node build/index.js"
 	}
 }
