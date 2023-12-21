@@ -2,6 +2,13 @@
 	"name": "frontned",
 	"version": "0.1.0",
 	"private": true,
+	"scripts": {
+		"start": "webpack serve --open --mode development",
+		"build": "webpack --mode production",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint --ext .ts,.js src",
+		"lint:fix": "run lint --fix"
+	},
 	"dependencies": {
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^13.5.0",
@@ -30,13 +37,6 @@
 		"prettier": "^3.1.1",
 		"typescript": "*"
 	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"lint": "eslint --ext .ts,.js src",
-		"lint:fix": "run lint --fix"
 	},
 	"eslintConfig": {
 		"extends": [
