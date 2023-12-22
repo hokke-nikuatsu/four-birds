@@ -2,10 +2,6 @@
 	"name": "frontned",
 	"version": "0.1.0",
 	"private": true,
-	"engines": {
-		"node": ">=20.10.0",
-		"yarn": ">=1.22.21"
-	},
 	"scripts": {
 		"start": "webpack serve --open --mode development",
 		"build": "webpack --mode production",
@@ -71,5 +67,6 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	}
+	},
+	"packageManager": "yarn@4.0.2"
 }

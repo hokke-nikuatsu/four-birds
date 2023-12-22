@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/.yarn
 
 # testing
 /coverage
@@ -11,5 +12,6 @@
 # misc
 .DS_Store
 
+# logs
 yarn-debug.log*
 yarn-error.log*
