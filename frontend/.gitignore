@@ -1,6 +1,7 @@
 # dependencies
 /node_modules
-/.yarn/install-state.gz
+.yarn/
+!.yarn/releases/*
 
 # testing
 /coverage
