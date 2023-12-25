@@ -28,5 +28,5 @@
 		"outDir": "lib"
 	},
 	"include": ["src/**/*"],
-	"exclude": ["lib", "build", "node_modules"]
+	"exclude": ["lib", "build", "node_modules", ".yarn"]
 }
