@@ -1,0 +1,38 @@
+{
+	"name": "functions",
+	"version": "1.0.0",
+	"license": "MIT",
+	"main": "./build/index.js",
+	"packageManager": "yarn@3.6.4",
+	"scripts": {
+		"lint": "eslint --ext .ts,.js src",
+		"lint:fix": "run lint --fix",
+		"build": "tsc",
+		"deploy": "firebase deploy --only functions",
+		"logs": "firebase functions:log"
+	},
+	"dependencies": {
+		"firebase-admin": "^10.2.0",
+		"firebase-functions": "^3.21.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.10.5",
+		"@typescript-eslint/eslint-plugin": "^6.16.0",
+		"@typescript-eslint/parser": "^6.16.0",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-config-standard-with-typescript": "^43.0.0",
+		"eslint-plugin-functional": "^6.0.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-n": "^16.5.0",
+		"eslint-plugin-prefer-arrow-functions": "^3.2.4",
+		"eslint-plugin-prettier": "^5.1.2",
+		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-unicorn": "^50.0.1",
+		"eslint-plugin-unused-imports": "^3.0.0",
+		"firebase-tools": "^13.0.2",
+		"prettier": "^3.1.1",
+		"typescript": "^5.3.3"
+	},
+	"private": true
+}
