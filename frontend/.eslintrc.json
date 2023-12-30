@@ -19,7 +19,6 @@
 		"import",
 		"unused-imports",
 		"unicorn",
-		"functional",
 		"prefer-arrow-functions",
 		"prettier",
 		"react",
@@ -131,8 +130,6 @@
 		],
 
 		// reliability
-		"functional/no-let": "error",
-		"functional/immutable-data": "error",
 		"no-useless-catch": 0,
 		"no-async-promise-executor": "error",
 		"no-unreachable": "error",
