@@ -9,7 +9,8 @@
 		"lint:fix": "run lint --fix",
 		"start": "tsc && firebase emulators:start",
 		"build": "tsc",
-		"deploy": "tsc && firebase deploy --only functions",
+		"deploy:dev": "/bin/bash ./deploy.sh dev ./credentials/four-birds-dev.json",
+		"deploy:prod": "/bin/bash ./deploy.sh prod /credentials/four-birds-prod.json",
 		"logs": "firebase functions:log"
 	},
 	"dependencies": {
