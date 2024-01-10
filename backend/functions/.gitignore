@@ -7,7 +7,13 @@
 # production
 /build
 
+# GCP
+/credentials
+
 # misc
 .DS_Store
 *.log
 **/*.log
+
+# env
+.env*
