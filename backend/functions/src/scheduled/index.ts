@@ -1,0 +1,1 @@
+export { fetchAndStoreNews } from './fetchAndStoreNews';

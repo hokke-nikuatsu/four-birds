@@ -5,8 +5,7 @@
 {
 	"env": {
 		"es2021": true,
-		"node": true,
-		"browser": true
+		"node": true
 	},
 	"extends": [
 		"eslint:recommended",
@@ -20,15 +19,13 @@
 		"unused-imports",
 		"unicorn",
 		"prefer-arrow-functions",
-		"prettier",
-		"react",
-		"react-hooks"
+		"prettier"
 	],
 	"globals": {
 		"Atomics": "readonly",
 		"SharedArrayBuffer": "readonly"
 	},
-	"ignorePatterns": ["lib", "build", "node_modules"],
+	"ignorePatterns": ["build", "node_modules"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"sourceType": "module",
@@ -57,7 +54,6 @@
 						"position": "before"
 					}
 				],
-				"pathGroupsExcludedImportTypes": ["react"],
 				"alphabetize": {
 					"order": "asc",
 					"caseInsensitive": true
@@ -89,9 +85,8 @@
 				"argsIgnorePattern": "^_"
 			}
 		],
-		"no-duplicate-imports": "error",
 
-		// coding style & format
+		// format
 		"curly": [2, "multi-line"],
 		"prefer-template": "error",
 		"@typescript-eslint/switch-exhaustiveness-check": "error",
@@ -134,12 +129,6 @@
 		"no-async-promise-executor": "error",
 		"no-unreachable": "error",
 		"no-throw-literal": "error",
-
-		// react
-		"react/jsx-uses-react": [1],
-		"react/jsx-uses-vars": 1,
-		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn",
 
 		// collaboration with other tools
 		"prettier/prettier": [

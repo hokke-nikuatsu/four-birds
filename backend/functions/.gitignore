@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+.yarn/*
+!.yarn/releases/
+!.yarn/releases/yarn-3.6.4.cjs
+
+# production
+/build
+
+# GCP
+/credentials
+
+# misc
+.DS_Store
+*.log
+**/*.log
+
+# env
+.env*
