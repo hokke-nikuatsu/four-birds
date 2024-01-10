@@ -1,17 +1,11 @@
 import { loadEnvProperty } from './common';
 
 // Cloud Functions
-export const FUNCTIONS_REGION = loadEnvProperty(
-	'FUNCTIONS_REGION',
-);
+export const FUNCTIONS_REGION = loadEnvProperty('FUNCTIONS_REGION');
 
 // Newsdata.io API
-export const NEWSDATA_IO_API_KEY = loadEnvProperty(
-	'NEWSDATA_IO_API_KEY',
-);
-export const NEWSDATA_IO_API_URL = loadEnvProperty(
-	'NEWSDATA_IO_API_URL',
-);
+export const NEWSDATA_IO_API_KEY = loadEnvProperty('NEWSDATA_IO_API_KEY');
+export const NEWSDATA_IO_API_URL = loadEnvProperty('NEWSDATA_IO_API_URL');
 
 // Planetscale API
 export const DB_URL = loadEnvProperty('DB_URL');
