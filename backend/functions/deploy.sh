@@ -22,8 +22,11 @@ read -p "Do you continue? [y/N]: " CONFIRM
 if [[ $CONFIRM =~ ^[Yy]$ ]]; then
     tsc
     firebase deploy --only functions --project=$PROJECT
-else
+elif [[ $CONFIRM =~ ^[Nn]$ ]]; then
     echo "Deploying cancelled."
+    exit 1
+else
+    echo "Invalid input. Exiting."
     exit 1
 fi
 
