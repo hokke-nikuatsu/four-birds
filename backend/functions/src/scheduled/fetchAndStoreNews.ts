@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
 import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
 import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
-import { obtainNews } from '../shared/news/newsdataIo';
+import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
 import { FUNCTIONS_REGION } from '../utils/env';
 
@@ -26,7 +26,7 @@ export const fetchAndStoreNews = functions
 			const latestPublishedDate = await obtainLatestPublishedDate();
 
 			do {
-				const { results, nextPage } = await obtainNews(
+				const { results, nextPage } = await fetchNews(
 					page,
 					latestPublishedDate,
 				);

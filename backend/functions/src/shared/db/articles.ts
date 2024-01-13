@@ -2,7 +2,7 @@ import { type RowDataPacket } from 'mysql2';
 import { storeArticleCategories } from './articleCategories';
 import { storeArticleCountries } from './articleCountries';
 import { dbConnection } from './connection';
-import { obtainPublisherId } from './publisher';
+import { fetchPublisherId } from './publisher';
 import { obtainOgpUrls } from '../../shared/news/ogp';
 import { DESCRIPTION_MAXIMUM_LENGTH, type DBArticle } from '../../types/db';
 import { type Article } from '../../types/news';
@@ -70,7 +70,7 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 			const publishedDate = new Date(eachNewsData.pubDate);
 			const createdAt = new Date();
 			const publisher = eachNewsData.source_id;
-			const publisherId = await obtainPublisherId(publisher);
+			const publisherId = await fetchPublisherId(publisher);
 
 			const articleData: DBArticle = {
 				articleId,

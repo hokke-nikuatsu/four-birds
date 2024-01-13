@@ -45,7 +45,7 @@ const createNewsdataIoApiParams = (
 	return searchParams;
 };
 
-export const obtainNews = async (
+export const fetchNews = async (
 	page: NewsdataIoApiResponse['nextPage'] | undefined,
 	latestPublishedDate: DBArticle['publishedDate'],
 ): Promise<{

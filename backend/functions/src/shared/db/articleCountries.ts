@@ -2,7 +2,7 @@ import { type PoolConnection } from 'mysql2/promise';
 import {
 	hasCountryInCountries,
 	insertCountryInCountries,
-	obtainCountryId,
+	fetchCountryId,
 } from './countries';
 import { type DBArticleCountry } from '../../types/db';
 import { type Article } from '../../types/news';
@@ -21,7 +21,7 @@ export const storeArticleCountries = async (
 			await insertCountryInCountries(connection, country);
 		}
 
-		const countryId = await obtainCountryId(connection, country);
+		const countryId = await fetchCountryId(connection, country);
 		const now = new Date();
 		const articleCountryData: DBArticleCountry = {
 			articleId,

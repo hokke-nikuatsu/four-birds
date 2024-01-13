@@ -6,7 +6,7 @@ import {
 	QUERY_SELECT_COUNTRY_ID,
 } from '../../utils/query';
 
-export const obtainCountryId = async (
+export const fetchCountryId = async (
 	connection: PoolConnection,
 	country: DBCountry['name'],
 ): Promise<DBCountry['countryId']> => {
@@ -24,7 +24,7 @@ export const obtainCountryId = async (
 
 		return countryId;
 	} catch (e) {
-		throw new Error(`Error in obtainCountryId: ${e}`);
+		throw new Error(`Error in fetchCountryId: ${e}`);
 	} finally {
 		if (connection) {
 			connection.release();
