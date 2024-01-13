@@ -10,7 +10,7 @@ if [ "$ENV" = "dev" ]; then
 elif [ "$ENV" = "prod" ]; then
     echo "Deploying to production environment..."
     cp .env.prod .env
-    PROJECT="four-birds-prod"
+    PROJECT="four-birds-409101"
 else
     echo "No environment is set."
     exit 1
