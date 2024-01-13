@@ -27,7 +27,7 @@ export const obtainPublisherId = async (
 		const [rows] = result as RowDataPacket[];
 
 		if (!rows || rows.length !== 1) {
-			throw new Error('category_id is not found in categories.');
+			throw new Error('results from publishers is invalid.');
 		}
 
 		const publisherId: DBPublisher['publisherId'] = rows[0].publisher_id;

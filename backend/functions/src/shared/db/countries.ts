@@ -17,7 +17,7 @@ export const obtainCountryId = async (
 		const [rows] = results as RowDataPacket[];
 
 		if (!rows || rows.length !== 1) {
-			throw new Error('country_id is not found in countries.');
+			throw new Error('results from countries is invalid.');
 		}
 
 		const countryId: DBCountry['countryId'] = rows[0].country_id;
