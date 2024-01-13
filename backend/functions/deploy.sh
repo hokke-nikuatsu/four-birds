@@ -10,7 +10,7 @@ if [ "$ENV" = "dev" ]; then
 elif [ "$ENV" = "prod" ]; then
     echo "Deploying to production environment..."
     cp .env.prod .env
-    PROJECT="four-birds-prod"
+    PROJECT="four-birds-409101"
 else
     echo "No environment is set."
     exit 1
@@ -22,8 +22,11 @@ read -p "Do you continue? [y/N]: " CONFIRM
 if [[ $CONFIRM =~ ^[Yy]$ ]]; then
     tsc
     firebase deploy --only functions --project=$PROJECT
-else
+elif [[ $CONFIRM =~ ^[Nn]$ ]]; then
     echo "Deploying cancelled."
+    exit 1
+else
+    echo "Invalid input. Exiting."
     exit 1
 fi
 

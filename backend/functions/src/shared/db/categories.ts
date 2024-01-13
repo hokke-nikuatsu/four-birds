@@ -17,7 +17,7 @@ export const obtainCategoryId = async (
 	const [rows] = results as RowDataPacket[];
 
 	if (!rows || rows.length !== 1) {
-		throw new Error('category_id is not found in categories.');
+		throw new Error('results from categories is invalid.');
 	}
 
 	const categoryId: DBCategory['categoryId'] = rows[0].category_id;

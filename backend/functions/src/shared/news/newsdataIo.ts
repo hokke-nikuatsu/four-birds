@@ -1,3 +1,5 @@
+import moment from 'moment';
+import { type DBArticle } from '../../types/db';
 import {
 	NewsCountry,
 	NewsLanguage,
@@ -5,9 +7,10 @@ import {
 	type NewsdataIoApiParams,
 	type NewsdataIoApiResponse,
 	NewsTimezone,
-	NEWS_FETCH_INTERVAL,
 	NeedsFullContent,
 	NEWS_SIZE,
+	type Article,
+	NEWS_FETCH_INTERVAL,
 } from '../../types/news';
 import { NEWSDATA_IO_API_KEY, NEWSDATA_IO_API_URL } from '../../utils/env';
 
@@ -16,7 +19,6 @@ const baseParams: NewsdataIoApiParams = {
 	language: NewsLanguage.ENGLISH,
 	country: NewsCountry.JAPAN,
 	timezone: NewsTimezone.JAPAN,
-	timeframe: NEWS_FETCH_INTERVAL,
 	full_content: NeedsFullContent.FALSE,
 	size: NEWS_SIZE,
 };
@@ -30,7 +32,6 @@ const createNewsdataIoApiParams = (
 		language: params.language,
 		country: params.country,
 		timezone: params.timezone,
-		timeframe: params.timeframe,
 		full_content: params.full_content,
 		size: params.size,
 	});
@@ -46,7 +47,11 @@ const createNewsdataIoApiParams = (
 
 export const obtainNews = async (
 	page: NewsdataIoApiResponse['nextPage'] | undefined,
-): Promise<NewsdataIoApiResponse> => {
+	latestPublishedDate: DBArticle['publishedDate'],
+): Promise<{
+	results: Article[];
+	nextPage: NewsdataIoApiResponse['nextPage'];
+}> => {
 	const params = createNewsdataIoApiParams(baseParams, page);
 
 	const url = new URL(NEWSDATA_IO_API_URL);
@@ -66,7 +71,23 @@ export const obtainNews = async (
 			throw new Error(`Error with status code : ${formattedResponse.status}`);
 		}
 
-		return formattedResponse;
+		const results = formattedResponse.results;
+		const nextPage = formattedResponse.nextPage;
+
+		const filteredResults = results.filter((result) => {
+			const articleDate = new Date(result.pubDate);
+			const isNewerThanLatestNewsInArticles = articleDate > latestPublishedDate;
+			const newsFetchIntervalDate = moment()
+				.subtract(NEWS_FETCH_INTERVAL, 'hours')
+				.toDate();
+			const isWithinNewsFetchInterval = articleDate > newsFetchIntervalDate;
+
+			return isNewerThanLatestNewsInArticles && isWithinNewsFetchInterval;
+		});
+
+		return results.length === filteredResults.length
+			? { results: filteredResults, nextPage }
+			: { results: filteredResults, nextPage: '' };
 	} catch (e) {
 		throw new Error(`Error while fetching news: ${e}`);
 	}

@@ -3,6 +3,8 @@ export const QUERY_INSERT_ARTICLE =
 	'INSERT INTO `articles` (`article_id`, `title`, `description`, `published_date`, `url`, `ogp_url`, `publisher_id`, `is_valid`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 export const QUERY_HAS_ARTICLE_ID =
 	'SELECT 1 FROM `articles` WHERE `article_id` = ? LIMIT 1';
+export const QUERY_LATEST_PUBLISHED_DATE =
+	'SELECT MAX(published_date) as latest_published_date FROM articles;';
 
 // article_categories table
 export const QUERY_INSERT_ARTICLE_CATEGORY =
