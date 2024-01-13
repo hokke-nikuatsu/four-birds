@@ -2,22 +2,50 @@ import { type RowDataPacket } from 'mysql2';
 import { storeArticleCategories } from './articleCategories';
 import { storeArticleCountries } from './articleCountries';
 import { dbConnection } from './connection';
-import { storeNewsFetchLog } from './newsFetchLogs';
 import { obtainPublisherId } from './publisher';
+import { obtainOgpUrls } from '../../shared/news/ogp';
 import { DESCRIPTION_MAXIMUM_LENGTH, type DBArticle } from '../../types/db';
 import { type Article } from '../../types/news';
 import { shortenSentence, trimBrackets } from '../../utils/common';
-import { QUERY_HAS_ARTICLE_ID, QUERY_INSERT_ARTICLE } from '../../utils/query';
+import {
+	QUERY_HAS_ARTICLE_ID,
+	QUERY_INSERT_ARTICLE,
+	QUERY_LATEST_PUBLISHED_DATE,
+} from '../../utils/query';
+import { validateUrl } from '../../utils/validator';
 
-export const storeNews = async (newsData: Article[]): Promise<void> => {
+export const storeNews = async (newsData: Article[]): Promise<number> => {
 	const connection = await dbConnection();
 	connection.beginTransaction();
 
 	const articlesData: DBArticle[] = [];
-	const articleIds: DBArticle['articleId'][] = [];
 
 	try {
-		for (const eachNewsData of newsData) {
+		const urls = newsData.map((eachNewsData) => eachNewsData.link);
+		const ogpUrls = await obtainOgpUrls(urls);
+
+		for (let i = 0; i < newsData.length; i++) {
+			const eachNewsData = newsData[i];
+			const ogpUrl = ogpUrls[i];
+
+			if (!eachNewsData || !ogpUrl) {
+				continue;
+			}
+
+			const url = eachNewsData.link;
+			const isValidUrl = validateUrl(url);
+			const isValidOgpUrl = ogpUrl === '' ? true : validateUrl(ogpUrl);
+
+			if (!isValidUrl) {
+				console.log(`${url} is not secure url, so skip this article.`);
+				continue;
+			}
+
+			if (!isValidOgpUrl) {
+				console.log(`${ogpUrl} is not secure url, so skip this article.`);
+				continue;
+			}
+
 			const articleId = eachNewsData.article_id;
 
 			const result = await connection.query(QUERY_HAS_ARTICLE_ID, [articleId]);
@@ -49,8 +77,8 @@ export const storeNews = async (newsData: Article[]): Promise<void> => {
 				title: eachNewsData.title,
 				description: shortenedDescription,
 				publishedDate,
-				url: eachNewsData.link,
-				ogpUrl: eachNewsData.image_url,
+				url,
+				ogpUrl,
 				publisherId,
 				isValid: true,
 				createdAt: createdAt,
@@ -72,15 +100,11 @@ export const storeNews = async (newsData: Article[]): Promise<void> => {
 		await connection.commit();
 
 		console.log(`Insert articles succeeded.`);
-		articlesData.forEach((article) => {
-			console.log(`articleId: ${article.articleId}`);
-			articleIds.push(article.articleId);
-		});
 
 		const newsCount = articlesData.length;
-		await storeNewsFetchLog(newsCount, true);
+
+		return newsCount;
 	} catch (e) {
-		await storeNewsFetchLog(0, false);
 		await connection.rollback();
 
 		throw new Error(`Insert articles failed: ${e}`);
@@ -89,4 +113,21 @@ export const storeNews = async (newsData: Article[]): Promise<void> => {
 			connection.release();
 		}
 	}
+};
+
+export const obtainLatestPublishedDate = async (): Promise<
+	DBArticle['publishedDate']
+> => {
+	const connection = await dbConnection();
+	const results = await connection.execute(QUERY_LATEST_PUBLISHED_DATE);
+	const [rows] = results as RowDataPacket[];
+
+	if (!rows || rows.length !== 1) {
+		throw new Error('results from articles is invalid.');
+	}
+
+	const latestPublishedDate: DBArticle['publishedDate'] =
+		rows[0].latest_published_date;
+
+	return latestPublishedDate;
 };

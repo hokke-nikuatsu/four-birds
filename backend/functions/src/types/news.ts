@@ -1,4 +1,4 @@
-export const NEWS_FETCH_INTERVAL = '9'; // hours
+export const NEWS_FETCH_INTERVAL = 9;
 
 export const NEWS_SIZE = '10';
 
@@ -26,12 +26,12 @@ export enum NewsdataIoApiResponseStatus {
 	ERROR = 'error',
 }
 
+// timeframe can't be set in free plan anymore (default "24h" is adopted)
 export type NewsdataIoApiParams = {
 	apikey: string;
 	language: NewsLanguage;
 	country: NewsCountry;
 	timezone: NewsTimezone;
-	timeframe: string;
 	full_content: string;
 	size: string;
 	nextPage?: string;
@@ -46,7 +46,6 @@ export type Article = {
 	video_url: string | null;
 	description: string | null;
 	pubDate: string;
-	image_url: string;
 	source_id: string;
 	source_priority: number;
 	country: string[];

@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
-import { storeNews } from '../shared/db/articles';
+import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
+import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
 import { obtainNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
 import { FUNCTIONS_REGION } from '../utils/env';
@@ -22,18 +23,26 @@ export const fetchAndStoreNews = functions
 		let page = undefined;
 
 		try {
+			const latestPublishedDate = await obtainLatestPublishedDate();
+
 			do {
-				const response = await obtainNews(page);
-				const results = response.results;
+				const { results, nextPage } = await obtainNews(
+					page,
+					latestPublishedDate,
+				);
 
 				newsData = newsData.concat(results);
-				page = response.nextPage;
+				page = nextPage;
 			} while (page);
 
-			await storeNews(newsData);
-		} catch (e) {
-			throw new Error(`Fetching and storing news failed: ${e}`);
-		}
+			const newsCount = await storeNews(newsData);
 
-		console.log('---fetchAndStoreNews end---');
+			await storeNewsFetchLog(newsCount, true);
+		} catch (e) {
+			await storeNewsFetchLog(0, false);
+
+			throw new Error(`Fetching and storing news failed: ${e}`);
+		} finally {
+			console.log('---fetchAndStoreNews end---');
+		}
 	});
