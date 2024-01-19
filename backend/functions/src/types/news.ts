@@ -1,7 +1,3 @@
-export const NEWS_FETCH_INTERVAL = 9;
-
-export const NEWS_SIZE = '10';
-
 export enum NeedsFullContent {
 	TRUE = '1',
 	FALSE = '0',
