@@ -6,7 +6,7 @@ import {
 	QUERY_HAS_PUBLISHER,
 	QUERY_INSERT_PUBLISHER,
 	QUERY_SELECT_PUBLISHER_ID,
-} from '../../utils/query';
+} from '../../utils/db';
 
 export const fetchPublisherId = async (
 	publisher: Article['source_id'],

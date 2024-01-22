@@ -4,7 +4,7 @@ import {
 	QUERY_HAS_COUNTRY,
 	QUERY_INSERT_COUNTRY,
 	QUERY_SELECT_COUNTRY_ID,
-} from '../../utils/query';
+} from '../../utils/db';
 
 export const fetchCountryId = async (
 	connection: PoolConnection,

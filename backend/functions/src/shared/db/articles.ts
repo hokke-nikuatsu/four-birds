@@ -11,7 +11,7 @@ import {
 	QUERY_HAS_ARTICLE_ID,
 	QUERY_INSERT_ARTICLE,
 	QUERY_LATEST_PUBLISHED_DATE,
-} from '../../utils/query';
+} from '../../utils/db';
 import { validateUrl } from '../../utils/validator';
 
 export const storeNews = async (newsData: Article[]): Promise<number> => {

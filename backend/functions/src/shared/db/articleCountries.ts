@@ -6,7 +6,7 @@ import {
 } from './countries';
 import { type DBArticleCountry } from '../../types/db';
 import { type Article } from '../../types/news';
-import { QUERY_INSERT_ARTICLE_COUNTRY } from '../../utils/query';
+import { QUERY_INSERT_ARTICLE_COUNTRY } from '../../utils/db';
 
 export const storeArticleCountries = async (
 	connection: PoolConnection,

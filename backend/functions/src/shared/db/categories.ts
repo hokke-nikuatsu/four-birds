@@ -4,7 +4,7 @@ import {
 	QUERY_HAS_CATEGORY,
 	QUERY_INSERT_CATEGORY,
 	QUERY_SELECT_CATEGORY_ID,
-} from '../../utils/query';
+} from '../../utils/db';
 
 export const fetchCategoryId = async (
 	connection: PoolConnection,
