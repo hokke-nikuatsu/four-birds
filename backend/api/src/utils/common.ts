@@ -1,4 +1,7 @@
 import dotenv from 'dotenv';
+import moment from 'moment-timezone';
+import { type DBFetchNews } from '../types/db';
+import { type FetchNewsResponse } from '../types/io';
 
 dotenv.config();
 
@@ -29,4 +32,43 @@ export const convertToCamelCase = <T extends Record<string, unknown>>(
 		}
 	}
 	return newObj as { [K in keyof T as CamelCase<K & string>]: T[K] };
+};
+
+export const convertToJapanTime = (
+	date: Date,
+): DBFetchNews[number]['publishedDate'] =>
+	moment(date).tz('Asia/Tokyo').toDate();
+
+export const trimText = (text: string) => {
+	const maxLength = 300;
+
+	if (text.length <= maxLength) {
+		return text;
+	}
+	return `${text.substring(0, maxLength)}…`;
+};
+
+export const splitText = (text: string) => {
+	const splittedText = text.split(',');
+
+	return splittedText;
+};
+
+export const formatDate = (
+	date: Date,
+): FetchNewsResponse[number]['publishedDate'] =>
+	moment(date).format('YYYY/MM/DD hh:mm');
+
+export const capitalizeFirstLetter = (
+	categories: DBFetchNews[number]['categories'][],
+): DBFetchNews[number]['categories'][] => {
+	const formattedCategories = categories.map((category: string) => {
+		if (!category) return category;
+
+		const formattedCategory =
+			category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+		return formattedCategory;
+	});
+
+	return formattedCategories;
 };
