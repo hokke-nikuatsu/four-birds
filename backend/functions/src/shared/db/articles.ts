@@ -4,10 +4,15 @@ import { storeArticleCountries } from './articleCountries';
 import { dbConnection } from './connection';
 import { fetchPublisherId } from './publisher';
 import { obtainOgpUrls } from '../../shared/news/ogp';
-import { DESCRIPTION_MAXIMUM_LENGTH, type DBArticle } from '../../types/db';
+import { type DBArticle } from '../../types/db';
 import { type Article } from '../../types/news';
-import { shortenSentence, trimBrackets } from '../../utils/common';
 import {
+	containsJapanese,
+	shortenSentence,
+	trimAfterSpecialSymbols,
+} from '../../utils/common';
+import {
+	DESCRIPTION_MAXIMUM_LENGTH,
 	QUERY_HAS_ARTICLE_ID,
 	QUERY_INSERT_ARTICLE,
 	QUERY_LATEST_PUBLISHED_DATE,
@@ -22,13 +27,38 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 
 	try {
 		const urls = newsData.map((eachNewsData) => eachNewsData.link);
+		// NOTE: Fetching each ogp url separately takes long time to finish,
+		// so it should be implemented all at once.
 		const ogpUrls = await obtainOgpUrls(urls);
 
 		for (let i = 0; i < newsData.length; i++) {
 			const eachNewsData = newsData[i];
 			const ogpUrl = ogpUrls[i];
 
-			if (!eachNewsData || !ogpUrl) {
+			if (eachNewsData === undefined || ogpUrl === undefined) {
+				console.log(
+					`News data ${eachNewsData} or ogp url ${ogpUrl} is invalid, so skip this article.`,
+				);
+				continue;
+			}
+
+			const title = eachNewsData.title;
+			const hasTitleJapanese = containsJapanese(title);
+
+			if (hasTitleJapanese) {
+				console.log(`Title has Japanese words, so skip this article.`);
+				console.log(`Title : ${title}`);
+				continue;
+			}
+
+			const description = eachNewsData.description;
+			const hasDescriptionJapanese = description
+				? containsJapanese(description)
+				: true;
+
+			if (hasDescriptionJapanese) {
+				console.log(`Description has Japanese words, so skip this article.`);
+				console.log(`Description : ${description}`);
 				continue;
 			}
 
@@ -57,12 +87,12 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 
 			if (rows.length === 1) {
 				console.log(
-					`articleId "${articleId}" is already in articles, skip the insertion.`,
+					`articleId "${articleId}" is already in articles, so skip the insertion.`,
 				);
 				continue;
 			}
 
-			const trimmedDescription = trimBrackets(eachNewsData.description);
+			const trimmedDescription = trimAfterSpecialSymbols(description);
 			const shortenedDescription = shortenSentence(
 				trimmedDescription,
 				DESCRIPTION_MAXIMUM_LENGTH,
@@ -74,7 +104,7 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 
 			const articleData: DBArticle = {
 				articleId,
-				title: eachNewsData.title,
+				title,
 				description: shortenedDescription,
 				publishedDate,
 				url,
