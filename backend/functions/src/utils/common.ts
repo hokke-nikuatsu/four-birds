@@ -11,10 +11,17 @@ export const loadEnvProperty = (property: string): string => {
 	return value;
 };
 
-export const trimBrackets = (str: string | null): string => {
+export const trimAfterSpecialSymbols = (str: string | null): string => {
 	if (str) {
-		return str.replace(/(\[…])|(\s\[…])/g, '');
+		const indexOfSymbol = str.search(/\[…]|…|©| <FULL STORY>/);
+
+		if (indexOfSymbol !== -1) {
+			return str.substring(0, indexOfSymbol);
 	}
+
+		return str;
+	}
+
 	return '';
 };
 
