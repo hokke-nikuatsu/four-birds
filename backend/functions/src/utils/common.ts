@@ -17,7 +17,7 @@ export const trimAfterSpecialSymbols = (str: string | null): string => {
 
 		if (indexOfSymbol !== -1) {
 			return str.substring(0, indexOfSymbol);
-	}
+		}
 
 		return str;
 	}
@@ -40,4 +40,12 @@ export const shortenSentence = (
 			: str.substring(0, maximumLength);
 
 	return shortenedSentence;
+};
+
+export const containsJapanese = (text: string) => {
+	const japanesePattern =
+		/[\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFF66-\uFF9F]+/;
+	const hasJapanese = japanesePattern.test(text);
+
+	return hasJapanese;
 };
