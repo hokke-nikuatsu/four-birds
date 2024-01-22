@@ -6,9 +6,8 @@ export const QUERY_SELECT_ARTICLES = `
     a.published_date,
     a.url,
     a.ogp_url,
-    p.display_name,
-    GROUP_CONCAT(c.japanese_name ORDER BY c.japanese_name SEPARATOR ', ') AS categories,
-    GROUP_CONCAT(c2.japanese_name ORDER BY c2.japanese_name SEPARATOR ', ') AS countries
+    p.display_name AS publisher_name,
+    GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ',') AS categories
   FROM 
     articles a
   JOIN 
@@ -27,5 +26,5 @@ export const QUERY_SELECT_ARTICLES = `
     a.article_id
   ORDER BY 
     a.published_date DESC
-  LIMIT 20 OFFSET 20;
+  LIMIT 21 OFFSET ?;
 `;
