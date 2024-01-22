@@ -5,8 +5,9 @@ import { QUERY_SELECT_ARTICLES } from '../utils/query';
 
 export const fetchNewsList = async (
 	connection: PoolConnection,
-): Promise<FetchNewsResponse[]> => {
-	const result = await connection.query(QUERY_SELECT_ARTICLES);
+	offSet: number,
+): Promise<FetchNewsResponse> => {
+	const result = await connection.query(QUERY_SELECT_ARTICLES, [offSet]);
 	const [rows] = result as RowDataPacket[];
 
 	if (!rows) {
