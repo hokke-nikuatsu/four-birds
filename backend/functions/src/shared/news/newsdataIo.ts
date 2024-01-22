@@ -18,7 +18,7 @@ const baseParams: NewsdataIoApiParams = {
 	apikey: NEWSDATA_IO_API_KEY,
 	language: NewsLanguage.ENGLISH,
 	country: NewsCountry.JAPAN,
-	timezone: NewsTimezone.JAPAN,
+	timezone: NewsTimezone.UNITED_KINGDOM,
 	full_content: NeedsFullContent.FALSE,
 	size: NEWS_SIZE,
 };

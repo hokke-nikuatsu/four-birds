@@ -15,6 +15,7 @@ export enum NewsCountry {
 
 export enum NewsTimezone {
 	JAPAN = 'Japan',
+	UNITED_KINGDOM = 'Europe/London',
 }
 
 export enum NewsdataIoApiResponseStatus {
