@@ -1,5 +1,3 @@
-export const DESCRIPTION_MAXIMUM_LENGTH = 300;
-
 export type DBArticle = {
 	articleId: string;
 	title: string;

@@ -4,9 +4,9 @@ import {
 	QUERY_HAS_CATEGORY,
 	QUERY_INSERT_CATEGORY,
 	QUERY_SELECT_CATEGORY_ID,
-} from '../../utils/query';
+} from '../../utils/db';
 
-export const obtainCategoryId = async (
+export const fetchCategoryId = async (
 	connection: PoolConnection,
 	category: DBCategory['name'],
 ): Promise<DBCategory['categoryId']> => {

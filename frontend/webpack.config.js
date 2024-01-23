@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,6 +8,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	module: {
 		rules: [
@@ -46,10 +49,21 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
 		}),
+		new webpack.EnvironmentPlugin({
+			ENV: 'development',
+		}),
+		new CopyWebpackPlugin({
+			patterns: [
+				{
+					from: 'public/images',
+					to: 'images',
+				},
+			],
+		}),
 	],
 	devServer: {
 		static: {
-			directory: path.join(__dirname, 'build'),
+			directory: path.join(__dirname, 'public'),
 		},
 		compress: true,
 		port: 3000,

@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
 import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
 import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
-import { obtainNews } from '../shared/news/newsdataIo';
+import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
 import { FUNCTIONS_REGION } from '../utils/env';
 
@@ -14,7 +14,7 @@ const options: RuntimeOptions = {
 export const fetchAndStoreNews = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
-	.pubsub.schedule('0 6,14,22 * * *') // 6am, 2pm, and 10pm in Japan
+	.pubsub.schedule('0 * * * *')
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
 		console.log('---fetchAndStoreNews start---');
@@ -26,7 +26,7 @@ export const fetchAndStoreNews = functions
 			const latestPublishedDate = await obtainLatestPublishedDate();
 
 			do {
-				const { results, nextPage } = await obtainNews(
+				const { results, nextPage } = await fetchNews(
 					page,
 					latestPublishedDate,
 				);

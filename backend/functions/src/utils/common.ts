@@ -11,10 +11,17 @@ export const loadEnvProperty = (property: string): string => {
 	return value;
 };
 
-export const trimBrackets = (str: string | null): string => {
+export const trimAfterSpecialSymbols = (str: string | null): string => {
 	if (str) {
-		return str.replace(/(\[…])|(\s\[…])/g, '');
+		const indexOfSymbol = str.search(/\[…]|…|©| <FULL STORY>/);
+
+		if (indexOfSymbol !== -1) {
+			return str.substring(0, indexOfSymbol);
+		}
+
+		return str;
 	}
+
 	return '';
 };
 
@@ -33,4 +40,12 @@ export const shortenSentence = (
 			: str.substring(0, maximumLength);
 
 	return shortenedSentence;
+};
+
+export const containsJapanese = (text: string) => {
+	const japanesePattern =
+		/[\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFF66-\uFF9F]+/;
+	const hasJapanese = japanesePattern.test(text);
+
+	return hasJapanese;
 };

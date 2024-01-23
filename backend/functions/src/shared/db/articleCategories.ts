@@ -2,11 +2,11 @@ import { type PoolConnection } from 'mysql2/promise';
 import {
 	hasCategoryInCategories,
 	insertCategoryInCategories,
-	obtainCategoryId,
+	fetchCategoryId,
 } from './categories';
 import { type DBArticleCategory } from '../../types/db';
 import { type Article } from '../../types/news';
-import { QUERY_INSERT_ARTICLE_CATEGORY } from '../../utils/query';
+import { QUERY_INSERT_ARTICLE_CATEGORY } from '../../utils/db';
 
 export const storeArticleCategories = async (
 	connection: PoolConnection,
@@ -21,7 +21,7 @@ export const storeArticleCategories = async (
 			await insertCategoryInCategories(connection, category);
 		}
 
-		const categoryId = await obtainCategoryId(connection, category);
+		const categoryId = await fetchCategoryId(connection, category);
 		const now = new Date();
 		const articleCategoryData: DBArticleCategory = {
 			articleId,

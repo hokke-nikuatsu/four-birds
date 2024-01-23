@@ -8,17 +8,20 @@ import {
 	type NewsdataIoApiResponse,
 	NewsTimezone,
 	NeedsFullContent,
-	NEWS_SIZE,
 	type Article,
-	NEWS_FETCH_INTERVAL,
 } from '../../types/news';
 import { NEWSDATA_IO_API_KEY, NEWSDATA_IO_API_URL } from '../../utils/env';
+import {
+	NEWS_DELAYED_TIME,
+	NEWS_FETCH_INTERVAL,
+	NEWS_SIZE,
+} from '../../utils/news';
 
 const baseParams: NewsdataIoApiParams = {
 	apikey: NEWSDATA_IO_API_KEY,
 	language: NewsLanguage.ENGLISH,
 	country: NewsCountry.JAPAN,
-	timezone: NewsTimezone.JAPAN,
+	timezone: NewsTimezone.UNITED_KINGDOM,
 	full_content: NeedsFullContent.FALSE,
 	size: NEWS_SIZE,
 };
@@ -45,7 +48,7 @@ const createNewsdataIoApiParams = (
 	return searchParams;
 };
 
-export const obtainNews = async (
+export const fetchNews = async (
 	page: NewsdataIoApiResponse['nextPage'] | undefined,
 	latestPublishedDate: DBArticle['publishedDate'],
 ): Promise<{
@@ -78,7 +81,7 @@ export const obtainNews = async (
 			const articleDate = new Date(result.pubDate);
 			const isNewerThanLatestNewsInArticles = articleDate > latestPublishedDate;
 			const newsFetchIntervalDate = moment()
-				.subtract(NEWS_FETCH_INTERVAL, 'hours')
+				.subtract(NEWS_FETCH_INTERVAL + NEWS_DELAYED_TIME, 'hours')
 				.toDate();
 			const isWithinNewsFetchInterval = articleDate > newsFetchIntervalDate;
 

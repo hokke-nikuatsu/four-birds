@@ -1,6 +1,6 @@
 import { dbConnection } from './connection';
 import { type DBInsertNewsFetchLog } from '../../types/db';
-import { QUERY_INSERT_FETCH_NEWS_LOG } from '../../utils/query';
+import { QUERY_INSERT_FETCH_NEWS_LOG } from '../../utils/db';
 
 export const storeNewsFetchLog = async (
 	newsCount: number,

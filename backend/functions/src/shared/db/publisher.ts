@@ -6,9 +6,9 @@ import {
 	QUERY_HAS_PUBLISHER,
 	QUERY_INSERT_PUBLISHER,
 	QUERY_SELECT_PUBLISHER_ID,
-} from '../../utils/query';
+} from '../../utils/db';
 
-export const obtainPublisherId = async (
+export const fetchPublisherId = async (
 	publisher: Article['source_id'],
 ): Promise<DBPublisher['publisherId']> => {
 	const connection = await dbConnection();
@@ -34,7 +34,7 @@ export const obtainPublisherId = async (
 
 		return publisherId;
 	} catch (e) {
-		throw new Error(`Error in obtainPublisherId: ${e}`);
+		throw new Error(`Error in fetchPublisherId: ${e}`);
 	} finally {
 		if (connection) {
 			connection.release();
