@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"start": "ENV=development webpack serve --open --mode development",
-		"build": "webpack --mode production",
+		"build": "ENV=production webpack --mode production",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint --ext .ts,.js src",
 		"lint:fix": "run lint --fix"
