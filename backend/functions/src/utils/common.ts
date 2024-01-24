@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+export const API_HEALTH_CHECK_URL =
+	'https://four-birds-backend.onrender.com/api/health-check';
+
 export const loadEnvProperty = (property: string): string => {
 	const value = process.env[property];
 	if (!value) {
