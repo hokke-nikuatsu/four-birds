@@ -6,8 +6,6 @@ export const API_ROOT = 'api';
 
 const ENV = process.env.ENV || 'development';
 
-console.log('ENV: ', ENV);
-
 let API_HOST;
 switch (ENV) {
 	case 'production':
