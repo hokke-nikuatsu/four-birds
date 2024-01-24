@@ -56,12 +56,11 @@ module.exports = {
 		new CopyWebpackPlugin({
 			patterns: [
 				{
-					from: 'public/images',
-					to: 'images',
-				},
-				{
-					from: 'public/manifest.json',
-					to: 'manifest.json',
+					from: 'public',
+					to: '.',
+					globOptions: {
+						ignore: ['**/index.html'],
+					},
 				},
 			],
 		}),
