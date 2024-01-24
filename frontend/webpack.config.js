@@ -48,6 +48,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
+			publicPath: '/',
 		}),
 		new webpack.EnvironmentPlugin({
 			ENV: 'development',
@@ -57,6 +58,10 @@ module.exports = {
 				{
 					from: 'public/images',
 					to: 'images',
+				},
+				{
+					from: 'public/manifest.json',
+					to: 'manifest.json',
 				},
 			],
 		}),
