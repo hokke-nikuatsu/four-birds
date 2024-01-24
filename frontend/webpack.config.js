@@ -48,6 +48,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
+			publicPath: '/',
 		}),
 		new webpack.EnvironmentPlugin({
 			ENV: 'development',
@@ -55,8 +56,11 @@ module.exports = {
 		new CopyWebpackPlugin({
 			patterns: [
 				{
-					from: 'public/images',
-					to: 'images',
+					from: 'public',
+					to: '.',
+					globOptions: {
+						ignore: ['**/index.html'],
+					},
 				},
 			],
 		}),
