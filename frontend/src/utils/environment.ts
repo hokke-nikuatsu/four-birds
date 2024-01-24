@@ -1,8 +1,7 @@
 // API
-export const DEV_API_HOST = 'http://localhost';
-export const PROD_API_HOST = 'https://four-birds-backend.onrender.com';
-export const API_PORT = '3001';
-export const API_ROOT = 'api';
+const DEV_API_HOST = 'http://localhost';
+const PROD_API_HOST = 'https://four-birds-backend.onrender.com';
+const API_ROOT = 'api';
 
 const ENV = process.env.ENV || 'development';
 
@@ -18,4 +17,4 @@ switch (ENV) {
 		throw new Error(`Unknown environment: ${ENV}`);
 }
 
-export const API_URL = `${API_HOST}:${API_PORT}/${API_ROOT}`;
+export const API_URL = `${API_HOST}/${API_ROOT}`;
