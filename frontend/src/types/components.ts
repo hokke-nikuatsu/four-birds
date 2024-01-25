@@ -26,3 +26,7 @@ export type NewsItem = {
 	publisherName: string;
 	categories: string[];
 };
+
+export type Loading = {
+	isLoading: boolean;
+};
