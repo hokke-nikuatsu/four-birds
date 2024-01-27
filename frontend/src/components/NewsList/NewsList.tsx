@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { NewsGrid } from './NewsListStyle';
-import { fetchNews } from '../../services/newsService';
+import { fetchNews } from '../../services/api/news';
 import { type FetchNewsResponse } from '../../types/api';
 import Loading from '../Loading/Loading';
 import NewsCard from '../NewsCard/NewsCard';

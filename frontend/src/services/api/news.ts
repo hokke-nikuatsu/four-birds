@@ -1,6 +1,10 @@
-import { type FetchNewsResponse, type ApiResponse, STATUS } from '../types/api';
-import { fetchApiAbortController, fetchApiTimeout } from '../utils/common';
-import { API_URL } from '../utils/environment';
+import {
+	type FetchNewsResponse,
+	type ApiResponse,
+	STATUS,
+} from '../../types/api';
+import { fetchApiAbortController, fetchApiTimeout } from '../../utils/common';
+import { API_URL } from '../../utils/environment';
 
 export const fetchNews = async (
 	newsCount: number,
