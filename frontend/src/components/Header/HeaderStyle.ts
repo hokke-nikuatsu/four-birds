@@ -13,6 +13,7 @@ export const StyledHeader = styled.header`
 	background: #fff;
 	z-index: 1000;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	opacity: 0.95;
 `;
 
 export const LogoImage = styled.img`
