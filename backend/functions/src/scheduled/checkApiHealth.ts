@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
-import { API_HEALTH_CHECK_URL } from '../utils/common';
-import { FUNCTIONS_REGION } from '../utils/env';
+import { CHECK_API_HEALTH_SCHEDULE, FUNCTIONS_REGION } from '../utils/env';
 
 const options: RuntimeOptions = {
 	timeoutSeconds: 540,
@@ -11,7 +10,7 @@ const options: RuntimeOptions = {
 export const checkApiHealth = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
-	.pubsub.schedule('*/10 * * * *')
+	.pubsub.schedule(CHECK_API_HEALTH_SCHEDULE)
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
 		console.log('---checkApiHealth start---');
