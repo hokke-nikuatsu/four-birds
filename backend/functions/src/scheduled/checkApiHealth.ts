@@ -3,12 +3,12 @@ import { type RuntimeOptions } from 'firebase-functions';
 import {
 	API_HEALTH_CHECK_URL,
 	RUNTIME_MEMORY_SIZE,
-	RUNTIME_TIMEOUT_SECOUNDS,
+	RUNTIME_TIMEOUT_SECONDS,
 } from '../utils/common';
 import { CHECK_API_HEALTH_SCHEDULE, FUNCTIONS_REGION } from '../utils/env';
 
 const options: RuntimeOptions = {
-	timeoutSeconds: RUNTIME_TIMEOUT_SECOUNDS,
+	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,
 	memory: RUNTIME_MEMORY_SIZE,
 };
 
