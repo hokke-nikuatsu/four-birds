@@ -4,11 +4,12 @@ import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
 import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
 import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
+import { RUNTIME_MEMORY_SIZE, RUNTIME_TIMEOUT_SECOUNDS } from '../utils/common';
 import { FUNCTIONS_REGION, FETCH_AND_STORE_NEWS_SCHEDULE } from '../utils/env';
 
 const options: RuntimeOptions = {
-	timeoutSeconds: 540,
-	memory: '256MB',
+	timeoutSeconds: RUNTIME_TIMEOUT_SECOUNDS,
+	memory: RUNTIME_MEMORY_SIZE,
 };
 
 export const fetchAndStoreNews = functions

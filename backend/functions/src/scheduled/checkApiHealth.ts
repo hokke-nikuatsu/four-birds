@@ -1,10 +1,15 @@
 import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
+import {
+	API_HEALTH_CHECK_URL,
+	RUNTIME_MEMORY_SIZE,
+	RUNTIME_TIMEOUT_SECOUNDS,
+} from '../utils/common';
 import { CHECK_API_HEALTH_SCHEDULE, FUNCTIONS_REGION } from '../utils/env';
 
 const options: RuntimeOptions = {
-	timeoutSeconds: 540,
-	memory: '128MB',
+	timeoutSeconds: RUNTIME_TIMEOUT_SECOUNDS,
+	memory: RUNTIME_MEMORY_SIZE,
 };
 
 export const checkApiHealth = functions
