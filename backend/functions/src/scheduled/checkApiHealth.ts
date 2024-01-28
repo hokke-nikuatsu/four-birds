@@ -8,13 +8,13 @@ const options: RuntimeOptions = {
 	memory: '128MB',
 };
 
-export const apiHealthCheck = functions
+export const checkApiHealth = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
 	.pubsub.schedule('*/10 * * * *')
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
-		console.log('---apiHealthCheck start---');
+		console.log('---checkApiHealth start---');
 
 		try {
 			const response = await fetch(API_HEALTH_CHECK_URL);
@@ -31,6 +31,6 @@ export const apiHealthCheck = functions
 		} catch (e) {
 			throw new Error(`API health check failed: ${e}`);
 		} finally {
-			console.log('---apiHealthCheck end---');
+			console.log('---checkApiHealth end---');
 		}
 	});
