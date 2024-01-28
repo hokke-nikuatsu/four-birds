@@ -5,7 +5,7 @@ import { type FetchNewsResponse } from '../../types/api';
 import Loading from '../Loading/Loading';
 import NewsCard from '../NewsCard/NewsCard';
 
-const NewsList: React.FC = () => {
+const NewsList = () => {
 	const [newsItems, setNewsItems] = useState<FetchNewsResponse>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [pageIndex, setPageIndex] = useState<number>(0);

@@ -1,8 +1,7 @@
-import React from 'react';
 import { StyledTopPage } from './TopPageStyle';
 import NewsList from '../../components/NewsList/NewsList';
 
-const TopPage: React.FC = () => (
+const TopPage = () => (
 	<StyledTopPage>
 		<NewsList />
 	</StyledTopPage>
