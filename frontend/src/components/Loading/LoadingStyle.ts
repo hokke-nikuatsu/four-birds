@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoadingArea = styled.div`
+export const StyledLoading = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
