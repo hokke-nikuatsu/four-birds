@@ -26,12 +26,16 @@ const NewsCard: React.FC<NewsItem> = ({
 	categories,
 }) => {
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const imageUrl = ogpUrl || pathToPlaceHolderImage;
+	const [imageUrl, setImageUrl] = useState(ogpUrl || pathToPlaceHolderImage);
 
 	useEffect(() => {
 		const img = new Image();
 		img.src = imageUrl;
 		img.onload = () => {
+			setImageLoaded(true);
+		};
+		img.onerror = () => {
+			setImageUrl(pathToPlaceHolderImage);
 			setImageLoaded(true);
 		};
 	}, [imageUrl]);
