@@ -32,5 +32,8 @@ export type Loading = {
 };
 
 export type User = {
-	clientId: string;
+	uid: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
 };

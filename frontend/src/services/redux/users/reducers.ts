@@ -6,14 +6,21 @@ import {
 } from './types';
 
 const initialState: UserState = {
-	clientId: '',
+	uid: '',
+	displayName: '',
+	email: '',
+	photoUrl: '',
 };
 
 export const userReducer = (state = initialState, action: UserActionTypes) => {
-	console.log('action.type: ', action.type);
 	switch (action.type) {
 		case SIGN_IN_USER:
-			return { clientId: action.payload.clientId };
+			return {
+				uid: action.payload.uid,
+				displayName: action.payload.displayName,
+				email: action.payload.email,
+				photoUrl: action.payload.photoUrl,
+			};
 		case SIGN_OUT_USER:
 			return state;
 		default:
