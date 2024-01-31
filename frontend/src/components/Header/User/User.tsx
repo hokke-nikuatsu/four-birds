@@ -9,7 +9,7 @@ import {
 } from './UserStyle';
 import { userAuthenticator } from '../../../App';
 import { type reducers } from '../../../services/redux/rootReducer';
-import { signInUser } from '../../../services/redux/users/actions';
+import { signInUser, signOutUser } from '../../../services/redux/users/actions';
 
 export type AppState = ReturnType<typeof reducers>;
 
@@ -23,8 +23,9 @@ const User = () => {
 		await userAuthenticator.signInWithGoogleAccount();
 	};
 
-	const logout = () => {
-		// Implement the logout logic, e.g., dispatch(signOutUser());
+	const logout = async () => {
+		await userAuthenticator.signOutFromGoogleAccount();
+		dispatch(signOutUser());
 	};
 
 	useEffect(() => {

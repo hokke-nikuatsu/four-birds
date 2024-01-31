@@ -22,7 +22,7 @@ export const userReducer = (state = initialState, action: UserActionTypes) => {
 				photoUrl: action.payload.photoUrl,
 			};
 		case SIGN_OUT_USER:
-			return state;
+			return initialState;
 		default:
 			return state;
 	}

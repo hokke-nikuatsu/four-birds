@@ -5,6 +5,7 @@ import {
 	GoogleAuthProvider,
 	type User,
 	signInWithRedirect,
+	signOut as firebaseSignOut,
 	getRedirectResult,
 } from 'firebase/auth';
 
@@ -30,7 +31,19 @@ export class UserAuthenticator {
 	}
 
 	signInWithGoogleAccount = async (): Promise<void> => {
-		await signInWithRedirect(this.auth, this.googleProvider);
+		try {
+			await signInWithRedirect(this.auth, this.googleProvider);
+		} catch (e) {
+			throw new Error(`Error during sign in: ${e}`);
+		}
+	};
+
+	signOutFromGoogleAccount = async (): Promise<void> => {
+		try {
+			await firebaseSignOut(this.auth);
+		} catch (e) {
+			throw new Error(`Error during sign out: ${e}`);
+		}
 	};
 
 	handleRedirectResult = async (): Promise<User | undefined> => {
