@@ -4,7 +4,7 @@ import { StyledHeader, LogoImage } from './HeaderStyle';
 const Header = () => (
 	<StyledHeader>
 		<Link to="/">
-			<LogoImage src="/images/logo.png" alt="Logo" />
+			<LogoImage src={PATH_TO_LOGO_IMAGE} alt="Logo" />
 		</Link>
 	</StyledHeader>
 );

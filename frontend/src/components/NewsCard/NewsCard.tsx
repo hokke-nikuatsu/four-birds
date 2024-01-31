@@ -14,7 +14,7 @@ import {
 	Category,
 } from './NewsCardStyle';
 import { type NewsItem } from '../../types/components';
-import { pathToPlaceHolderImage } from '../../utils/common';
+import { PATH_TO_PLACE_HOLDER_IMAGE } from '../../utils/common';
 
 const NewsCard: React.FC<NewsItem> = ({
 	title,
@@ -26,7 +26,9 @@ const NewsCard: React.FC<NewsItem> = ({
 	categories,
 }) => {
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const [imageUrl, setImageUrl] = useState(ogpUrl || pathToPlaceHolderImage);
+	const [imageUrl, setImageUrl] = useState(
+		ogpUrl || PATH_TO_PLACE_HOLDER_IMAGE,
+	);
 
 	useEffect(() => {
 		const img = new Image();
@@ -35,7 +37,7 @@ const NewsCard: React.FC<NewsItem> = ({
 			setImageLoaded(true);
 		};
 		img.onerror = () => {
-			setImageUrl(pathToPlaceHolderImage);
+			setImageUrl(PATH_TO_PLACE_HOLDER_IMAGE);
 			setImageLoaded(true);
 		};
 	}, [imageUrl]);
