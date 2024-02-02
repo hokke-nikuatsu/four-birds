@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { NewsGrid } from './NewsListStyle';
 import { fetchNews } from '../../services/api/news';
 import { type FetchNewsResponse } from '../../types/api';
+import { FETCH_ARTICLE_OFFSET } from '../../utils/common';
 import Loading from '../Loading/Loading';
 import NewsCard from '../NewsCard/NewsCard';
 
@@ -22,7 +23,7 @@ const NewsList = () => {
 				const data = await fetchNews(start);
 
 				setNewsItems([...newsItems, ...data]);
-				setPageIndex(pageIndex + 21);
+				setPageIndex(pageIndex + FETCH_ARTICLE_OFFSET);
 			} catch (e) {
 				console.error('Fetch news items failed:', e);
 
