@@ -10,9 +10,7 @@ export const fetchNews = async (
 	newsCount: number,
 ): Promise<FetchNewsResponse> => {
 	try {
-		const response = await fetch(`${API_URL}/news?offset=${newsCount}`, {
-			signal: fetchApiAbortController.signal,
-		});
+		const response = await fetch(`${API_URL}/news?offset=${newsCount}`);
 
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status}`);
