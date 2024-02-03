@@ -120,10 +120,10 @@ export const QUERY_INSERT_ARTICLE_COUNTRY = `
     (?, ?, ?)
 `;
 
-export const QUERY_INSERT_FETCH_NEWS_LOG = `
+export const QUERY_INSERT_FETCH_ARTICLES_LOG = `
   INSERT INTO
-		fetch_news_logs 
-    	(executed_date, news_count, status, created_at) 
+		fetch_article_logs 
+    	(executed_date, article_count, status, created_at) 
   VALUES 
     (?, ?, ?, ?)
 `;

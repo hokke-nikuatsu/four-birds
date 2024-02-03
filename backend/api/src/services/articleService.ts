@@ -1,6 +1,6 @@
 import { type RowDataPacket, type PoolConnection } from 'mysql2/promise';
-import { type DBFetchNews } from '../types/db';
-import { type FetchNewsResponse } from '../types/io';
+import { type DBFetchArticles } from '../types/db';
+import { type FetchArticlesResponse } from '../types/io';
 import {
 	capitalizeFirstLetter,
 	convertToCamelCase,
@@ -11,33 +11,33 @@ import {
 } from '../utils/common';
 import { QUERY_SELECT_ARTICLES } from '../utils/query';
 
-export const fetchNewsList = async (
+export const fetchArticles = async (
 	connection: PoolConnection,
 	offSet: number,
-): Promise<FetchNewsResponse> => {
+): Promise<FetchArticlesResponse> => {
 	const result = await connection.query(QUERY_SELECT_ARTICLES, [offSet]);
 	const [rows] = result as RowDataPacket[];
 
 	if (!rows) {
-		throw new Error('Selection of news list failed.');
+		throw new Error('Fetching articles failed.');
 	}
 
-	const newsList = rows.map(convertToCamelCase) as DBFetchNews;
+	const articles = rows.map(convertToCamelCase) as DBFetchArticles;
 
-	const formattedNewsList = newsList.map((newsItem) => {
-		const convertedPublishedDate = convertToJapanTime(newsItem.publishedDate);
+	const formattedArticles = articles.map((article) => {
+		const convertedPublishedDate = convertToJapanTime(article.publishedDate);
 		const formattedPublishedDate = formatDate(convertedPublishedDate);
-		const trimmedDescription = trimText(newsItem.description);
-		const splittedCategories = splitText(newsItem.categories);
+		const trimmedDescription = trimText(article.description);
+		const splittedCategories = splitText(article.categories);
 		const formattedCategories = capitalizeFirstLetter(splittedCategories);
 
 		return {
-			...newsItem,
+			...article,
 			description: trimmedDescription,
 			publishedDate: formattedPublishedDate,
 			categories: formattedCategories,
 		};
 	});
 
-	return formattedNewsList;
+	return formattedArticles;
 };

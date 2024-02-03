@@ -1,1 +1,1 @@
-export { fetchAndStoreNews, checkApiHealth } from './scheduled';
+export { fetchArticles, checkApiHealth } from './scheduled';

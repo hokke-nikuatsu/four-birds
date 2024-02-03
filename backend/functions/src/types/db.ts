@@ -56,13 +56,16 @@ export type DBArticleCountry = {
 	updatedAt?: Date;
 };
 
-export type DBNewsFetchLog = {
-	newsFetchLogId: number;
-	newsCount: number;
+export type DBArticleFetchLog = {
+	articleFetchLogId: number;
+	articleCount: number;
 	executedDate: Date;
 	status: boolean;
 	createdAt: Date;
 	updatedAt?: Date;
 };
 
-export type DBInsertNewsFetchLog = Omit<DBNewsFetchLog, 'newsFetchLogId'>;
+export type DBInsertArticleFetchLog = Omit<
+	DBArticleFetchLog,
+	'articleFetchLogId'
+>;

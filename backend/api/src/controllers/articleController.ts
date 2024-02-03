@@ -1,16 +1,16 @@
 import { type Request, type Response } from 'express';
-import { fetchNewsList as fetchNewsListService } from '../services/newsService';
+import { fetchArticles as fetchArticlesService } from '../services/articleService';
 import { dbConnection } from '../shared/db/connection';
 import {
-	type FetchNewsResponse,
-	type FetchNewsRequest,
+	type FetchArticlesResponse,
+	type FetchArticlesRequest,
 	type ApiResponse,
 	STATUS,
 } from '../types/io';
 
-export const fetchNewsList = async (
-	req: Request<FetchNewsRequest>,
-	res: Response<ApiResponse<FetchNewsResponse>>,
+export const fetchArticles = async (
+	req: Request<FetchArticlesRequest>,
+	res: Response<ApiResponse<FetchArticlesResponse>>,
 ) => {
 	try {
 		const offset = req.query.offset;
@@ -22,9 +22,9 @@ export const fetchNewsList = async (
 		const parsedOffset = parseInt(offset);
 		const connection = await dbConnection();
 
-		const newsList = await fetchNewsListService(connection, parsedOffset);
+		const articles = await fetchArticlesService(connection, parsedOffset);
 
-		res.json({ status: STATUS.SUCCESS, data: newsList });
+		res.json({ status: STATUS.SUCCESS, data: articles });
 	} catch (e) {
 		console.error(e);
 

@@ -1,2 +1,2 @@
-export { fetchAndStoreNews } from './fetchAndStoreNews';
+export { fetchArticles } from './fetchArticles';
 export { checkApiHealth } from './checkApiHealth';

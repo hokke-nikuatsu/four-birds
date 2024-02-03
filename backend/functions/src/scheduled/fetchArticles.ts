@@ -1,26 +1,29 @@
 import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
-import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
-import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
+import {
+	obtainLatestPublishedDate,
+	storeArticles,
+} from '../shared/db/articles';
+import { fetchArticlesLog } from '../shared/db/fetchArticlesLogs';
 import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
 import { RUNTIME_MEMORY_SIZE, RUNTIME_TIMEOUT_SECONDS } from '../utils/common';
-import { FUNCTIONS_REGION, FETCH_AND_STORE_NEWS_SCHEDULE } from '../utils/env';
+import { FUNCTIONS_REGION, FETCH_ARTICLES_SCHEDULE } from '../utils/env';
 
 const options: RuntimeOptions = {
 	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,
 	memory: RUNTIME_MEMORY_SIZE,
 };
 
-export const fetchAndStoreNews = functions
+export const fetchArticles = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
-	.pubsub.schedule(FETCH_AND_STORE_NEWS_SCHEDULE)
+	.pubsub.schedule(FETCH_ARTICLES_SCHEDULE)
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
-		console.log('---fetchAndStoreNews start---');
+		console.log('---fetchArticles start---');
 
-		let newsData: Article[] = [];
+		let articles: Article[] = [];
 		let page = undefined;
 
 		try {
@@ -32,18 +35,18 @@ export const fetchAndStoreNews = functions
 					latestPublishedDate,
 				);
 
-				newsData = newsData.concat(results);
+				articles = articles.concat(results);
 				page = nextPage;
 			} while (page);
 
-			const newsCount = await storeNews(newsData);
+			const articleCount = await storeArticles(articles);
 
-			await storeNewsFetchLog(newsCount, true);
+			await fetchArticlesLog(articleCount, true);
 		} catch (e) {
-			await storeNewsFetchLog(0, false);
+			await fetchArticlesLog(0, false);
 
-			throw new Error(`Fetching and storing news failed: ${e}`);
+			throw new Error(`Fetching articles failed: ${e}`);
 		} finally {
-			console.log('---fetchAndStoreNews end---');
+			console.log('---fetchArticles end---');
 		}
 	});

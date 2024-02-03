@@ -9,11 +9,11 @@ export type ApiResponse<T> = {
 	message?: string;
 };
 
-export type FetchNewsRequest = {
+export type FetchArticlesRequest = {
 	offset: string;
 };
 
-export type FetchNewsResponse = {
+export type FetchArticlesResponse = {
 	articleId: string;
 	title: string;
 	description: string;

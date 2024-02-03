@@ -1,4 +1,4 @@
-export type DBFetchNews = {
+export type DBFetchArticles = {
 	articleId: string;
 	title: string;
 	description: string;

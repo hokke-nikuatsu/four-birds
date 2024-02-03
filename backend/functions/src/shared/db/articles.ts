@@ -3,7 +3,6 @@ import { storeArticleCategories } from './articleCategories';
 import { storeArticleCountries } from './articleCountries';
 import { dbConnection } from './connection';
 import { fetchPublisherId } from './publisher';
-import { obtainOgpUrls } from '../../shared/news/ogp';
 import { type DBArticle } from '../../types/db';
 import { type Article } from '../../types/news';
 import {
@@ -18,31 +17,32 @@ import {
 	QUERY_LATEST_PUBLISHED_DATE,
 } from '../../utils/db';
 import { validateUrl } from '../../utils/validator';
+import { obtainOgpUrls } from '../news/ogp';
 
-export const storeNews = async (newsData: Article[]): Promise<number> => {
+export const storeArticles = async (articles: Article[]): Promise<number> => {
 	const connection = await dbConnection();
 	connection.beginTransaction();
 
 	const articlesData: DBArticle[] = [];
 
 	try {
-		const urls = newsData.map((eachNewsData) => eachNewsData.link);
+		const urls = articles.map((article) => article.link);
 		// NOTE: Fetching each ogp url separately takes long time to finish,
 		// so it should be implemented all at once.
 		const ogpUrls = await obtainOgpUrls(urls);
 
-		for (let i = 0; i < newsData.length; i++) {
-			const eachNewsData = newsData[i];
+		for (let i = 0; i < articles.length; i++) {
+			const article = articles[i];
 			const ogpUrl = ogpUrls[i];
 
-			if (eachNewsData === undefined || ogpUrl === undefined) {
+			if (article === undefined || ogpUrl === undefined) {
 				console.log(
-					`News data ${eachNewsData} or ogp url ${ogpUrl} is invalid, so skip this article.`,
+					`Article data ${article} or ogp url ${ogpUrl} is invalid, so skip this article.`,
 				);
 				continue;
 			}
 
-			const title = eachNewsData.title;
+			const title = article.title;
 			const hasTitleJapanese = containsJapanese(title);
 
 			if (hasTitleJapanese) {
@@ -51,7 +51,7 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 				continue;
 			}
 
-			const description = eachNewsData.description;
+			const description = article.description;
 			const hasDescriptionJapanese = description
 				? containsJapanese(description)
 				: true;
@@ -62,7 +62,7 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 				continue;
 			}
 
-			const url = eachNewsData.link;
+			const url = article.link;
 			const isValidUrl = validateUrl(url);
 			const isValidOgpUrl = ogpUrl === '' ? true : validateUrl(ogpUrl);
 
@@ -76,7 +76,7 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 				continue;
 			}
 
-			const articleId = eachNewsData.article_id;
+			const articleId = article.article_id;
 
 			const result = await connection.query(QUERY_HAS_ARTICLE_ID, [articleId]);
 			const [rows] = result as RowDataPacket[];
@@ -97,9 +97,9 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 				trimmedDescription,
 				DESCRIPTION_MAXIMUM_LENGTH,
 			);
-			const publishedDate = new Date(eachNewsData.pubDate);
+			const publishedDate = new Date(article.pubDate);
 			const createdAt = new Date();
-			const publisher = eachNewsData.source_id;
+			const publisher = article.source_id;
 			const publisherId = await fetchPublisherId(publisher);
 
 			const articleData: DBArticle = {
@@ -116,10 +116,10 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 
 			articlesData.push(articleData);
 
-			const categories = eachNewsData.category;
+			const categories = article.category;
 			await storeArticleCategories(connection, articleId, categories);
 
-			const countries = eachNewsData.country;
+			const countries = article.country;
 			await storeArticleCountries(connection, articleId, countries);
 		}
 
@@ -131,9 +131,9 @@ export const storeNews = async (newsData: Article[]): Promise<number> => {
 
 		console.log(`Insert articles succeeded.`);
 
-		const newsCount = articlesData.length;
+		const articleCount = articlesData.length;
 
-		return newsCount;
+		return articleCount;
 	} catch (e) {
 		await connection.rollback();
 
