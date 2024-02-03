@@ -3,7 +3,6 @@ import {
 	type ApiResponse,
 	STATUS,
 } from '../../types/api';
-import { fetchApiAbortController, fetchApiTimeout } from '../../utils/common';
 import { API_URL } from '../../utils/environment';
 
 export const fetchNews = async (
@@ -26,11 +25,11 @@ export const fetchNews = async (
 			throw fetchNewsResponse;
 		}
 
-		return fetchNewsResponse.data;
+		const fetchNewsResponseData = fetchNewsResponse.data;
+
+		return fetchNewsResponseData;
 	} catch (e) {
 		console.error('Fetching news failed:', JSON.stringify(e));
 		throw e;
-	} finally {
-		clearTimeout(fetchApiTimeout);
 	}
 };
