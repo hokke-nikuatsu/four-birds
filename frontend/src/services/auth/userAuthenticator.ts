@@ -8,16 +8,7 @@ import {
 	signOut as firebaseSignOut,
 	getRedirectResult,
 } from 'firebase/auth';
-
-// TODO: Move settings to credentials folder
-const firebaseConfig = {
-	apiKey: 'AIzaSyDTRw87FGV0RSnq0CNdN5C4Fw5F1K055-o',
-	authDomain: 'four-birds-dev.firebaseapp.com',
-	projectId: 'four-birds-dev',
-	storageBucket: 'four-birds-dev.appspot.com',
-	messagingSenderId: '353459397017',
-	appId: '1:353459397017:web:679853af12cef74afa7308',
-};
+import { FIREBASE_CONFIG } from '../../utils/firebase';
 
 export class UserAuthenticator {
 	private googleProvider: GoogleAuthProvider;
@@ -26,7 +17,7 @@ export class UserAuthenticator {
 
 	constructor() {
 		this.googleProvider = new GoogleAuthProvider();
-		this.firebaseApp = initializeApp(firebaseConfig);
+		this.firebaseApp = initializeApp(FIREBASE_CONFIG);
 		this.auth = getAuth(this.firebaseApp);
 	}
 
