@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import React, { type MouseEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
 	Card,
 	CardImage,
 	CardContent,
 	Title,
-	Description,
 	Publisher,
 	Categories,
 	CardLink,
@@ -13,14 +14,25 @@ import {
 	DateAndPublisher,
 	TitleDescriptionContainer,
 	Category,
+	IconButton,
+	CardImageContainer,
+	CategoriesAndArrowContainer,
 } from './NewsCardStyle';
 import { type AppState } from '../../services/store/store';
 import { type NewsItem } from '../../types/components';
 import { PATH_TO_PLACE_HOLDER_IMAGE } from '../../utils/common';
 
-const NewsCard: React.FC<{ articleId: NewsItem['articleId'] }> = ({
-	articleId,
-}) => {
+const NewsCard: React.FC<{
+	articleId: NewsItem['articleId'];
+	isChosen: boolean;
+}> = ({ articleId, isChosen }) => {
+	const navigate = useNavigate();
+	const handleViewDetails = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+		navigate(`/training/${articleId}`);
+	};
+
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const [imageUrl, setImageUrl] = useState(PATH_TO_PLACE_HOLDER_IMAGE);
 
@@ -47,25 +59,28 @@ const NewsCard: React.FC<{ articleId: NewsItem['articleId'] }> = ({
 		};
 	}, [article]);
 
-	if (!article) return;
+	if (!article) return null;
 
 	return (
 		<Card>
 			<CardLink href={article.url} target="_blank" rel="noopener noreferrer">
-				<CardImage
-					src={imageUrl}
-					alt={article.title}
-					$imageLoaded={imageLoaded}
-				/>
-				<CardContent>
-					<TitleDescriptionContainer>
-						<Title>{article.title}</Title>
-						<Description>{article.description}</Description>
-					</TitleDescriptionContainer>
-					<DateAndPublisher>
-						<PublishedDate>{article.publishedDate.toString()}</PublishedDate>
-						<Publisher>{article.publisherName}</Publisher>
-					</DateAndPublisher>
+				<CardImageContainer>
+					<CardImage
+						src={imageUrl}
+						alt={article.title}
+						$imageLoaded={imageLoaded}
+					/>
+				</CardImageContainer>
+			</CardLink>
+			<CardContent>
+				<TitleDescriptionContainer>
+					<Title>{article.title}</Title>
+				</TitleDescriptionContainer>
+				<DateAndPublisher>
+					<PublishedDate>{article.publishedDate.toString()}</PublishedDate>
+					<Publisher>{article.publisherName}</Publisher>
+				</DateAndPublisher>
+				<CategoriesAndArrowContainer>
 					<Categories>
 						{article.categories.map((category, index) => (
 							<Category key={index} $category={category}>
@@ -73,8 +88,16 @@ const NewsCard: React.FC<{ articleId: NewsItem['articleId'] }> = ({
 							</Category>
 						))}
 					</Categories>
-				</CardContent>
-			</CardLink>
+					{!isChosen && (
+						<IconButton
+							onClick={(e) => handleViewDetails(e)}
+							aria-label="move to training page"
+						>
+							<ArrowForwardIcon sx={{ color: '#4f4f4f' }} />
+						</IconButton>
+					)}
+				</CategoriesAndArrowContainer>
+			</CardContent>
 		</Card>
 	);
 };
