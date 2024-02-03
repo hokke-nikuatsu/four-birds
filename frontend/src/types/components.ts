@@ -18,6 +18,7 @@ export enum Colors {
 }
 
 export type NewsItem = {
+	articleId: string;
 	title: string;
 	description: string;
 	publishedDate: string;
