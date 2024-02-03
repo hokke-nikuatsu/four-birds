@@ -8,10 +8,8 @@ import {
 	StyledUserName,
 } from './UserStyle';
 import { userAuthenticator } from '../../../App';
-import { type reducers } from '../../../services/redux/rootReducer';
 import { signInUser, signOutUser } from '../../../services/redux/users/actions';
-
-export type AppState = ReturnType<typeof reducers>;
+import { type AppState } from '../../../services/store/store';
 
 const User = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
