@@ -26,5 +26,5 @@ export const QUERY_SELECT_ARTICLES = `
     a.article_id
   ORDER BY 
     a.published_date DESC
-  LIMIT 21 OFFSET ?;
+  LIMIT 24 OFFSET ?;
 `;
