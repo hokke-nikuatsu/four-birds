@@ -1372,7 +1372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.9.2":
   version: 7.23.9
   resolution: "@babel/runtime@npm:7.23.9"
   dependencies:
@@ -2328,6 +2328,22 @@ __metadata:
   version: 5.15.6
   resolution: "@mui/core-downloads-tracker@npm:5.15.6"
   checksum: 38833a893c82e6244814be8321819fd08379a872068e06e1511f01ce243e21258b108fe5ddc66a02fddf07bba95b6cb6e9fc59538733c6072cab59b701ccb5c1
+  languageName: node
+  linkType: hard
+
+"@mui/icons-material@npm:^5.15.7":
+  version: 5.15.7
+  resolution: "@mui/icons-material@npm:5.15.7"
+  dependencies:
+    "@babel/runtime": ^7.23.9
+  peerDependencies:
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 9216d25b2267c1b06357edf761a11b1801861c0158bf53850ae88ab05b6f92128725c43ab8016634db7b8c8a98b42d0ada799ae7c30f9dfe3240c484a4af0036
   languageName: node
   linkType: hard
 
@@ -5716,6 +5732,7 @@ __metadata:
     "@babel/preset-react": ^7.23.3
     "@emotion/react": ^11.11.3
     "@emotion/styled": ^11.11.0
+    "@mui/icons-material": ^5.15.7
     "@mui/material": ^5.15.6
     "@testing-library/dom": ^9.3.3
     "@testing-library/react": ^14.1.2
