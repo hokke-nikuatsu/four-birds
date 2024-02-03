@@ -4,17 +4,18 @@ import { obtainLatestPublishedDate, storeNews } from '../shared/db/articles';
 import { storeNewsFetchLog } from '../shared/db/newsFetchLogs';
 import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
-import { FUNCTIONS_REGION } from '../utils/env';
+import { RUNTIME_MEMORY_SIZE, RUNTIME_TIMEOUT_SECONDS } from '../utils/common';
+import { FUNCTIONS_REGION, FETCH_AND_STORE_NEWS_SCHEDULE } from '../utils/env';
 
 const options: RuntimeOptions = {
-	timeoutSeconds: 540,
-	memory: '256MB',
+	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,
+	memory: RUNTIME_MEMORY_SIZE,
 };
 
 export const fetchAndStoreNews = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
-	.pubsub.schedule('0 * * * *')
+	.pubsub.schedule(FETCH_AND_STORE_NEWS_SCHEDULE)
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
 		console.log('---fetchAndStoreNews start---');

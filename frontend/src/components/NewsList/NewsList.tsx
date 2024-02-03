@@ -1,14 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { NewsGrid } from './NewsListStyle';
-import { fetchNews } from '../../services/newsService';
+import { fetchArticles } from '../../services/redux/articles/actions';
+import { useAppDispatch } from '../../services/store/store';
 import { type FetchNewsResponse } from '../../types/api';
+import { FETCH_ARTICLE_OFFSET } from '../../utils/common';
 import Loading from '../Loading/Loading';
 import NewsCard from '../NewsCard/NewsCard';
 
-const NewsList: React.FC = () => {
+const NewsList = () => {
 	const [newsItems, setNewsItems] = useState<FetchNewsResponse>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [pageIndex, setPageIndex] = useState<number>(0);
+	const dispatch = useAppDispatch();
 
 	const fetchNewsItems = useCallback(
 		async (start: number) => {
@@ -19,10 +22,10 @@ const NewsList: React.FC = () => {
 			setIsLoading(true);
 
 			try {
-				const data = await fetchNews(start);
+				const data = await dispatch(fetchArticles(start));
 
 				setNewsItems([...newsItems, ...data]);
-				setPageIndex(pageIndex + 21);
+				setPageIndex(pageIndex + FETCH_ARTICLE_OFFSET);
 			} catch (e) {
 				console.error('Fetch news items failed:', e);
 
@@ -31,7 +34,7 @@ const NewsList: React.FC = () => {
 				setIsLoading(false);
 			}
 		},
-		[isLoading, newsItems, pageIndex],
+		[dispatch, isLoading, newsItems, pageIndex],
 	);
 
 	useEffect(() => {
@@ -60,16 +63,7 @@ const NewsList: React.FC = () => {
 			<NewsGrid>
 				{newsItems &&
 					newsItems.map((newsItem) => (
-						<NewsCard
-							key={newsItem.articleId}
-							title={newsItem.title}
-							description={newsItem.description}
-							publishedDate={newsItem.publishedDate}
-							url={newsItem.url}
-							ogpUrl={newsItem.ogpUrl}
-							publisherName={newsItem.publisherName}
-							categories={newsItem.categories}
-						/>
+						<NewsCard key={newsItem.articleId} articleId={newsItem.articleId} />
 					))}
 			</NewsGrid>
 			{<Loading isLoading={isLoading} />}

@@ -4,6 +4,8 @@ dotenv.config();
 
 export const API_HEALTH_CHECK_URL =
 	'https://four-birds-backend.onrender.com/api/health-check';
+export const RUNTIME_MEMORY_SIZE = '256MB';
+export const RUNTIME_TIMEOUT_SECONDS = 540;
 
 export const loadEnvProperty = (property: string): string => {
 	const value = process.env[property];

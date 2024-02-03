@@ -1,20 +1,24 @@
 import * as functions from 'firebase-functions';
 import { type RuntimeOptions } from 'firebase-functions';
-import { API_HEALTH_CHECK_URL } from '../utils/common';
-import { FUNCTIONS_REGION } from '../utils/env';
+import {
+	API_HEALTH_CHECK_URL,
+	RUNTIME_MEMORY_SIZE,
+	RUNTIME_TIMEOUT_SECONDS,
+} from '../utils/common';
+import { CHECK_API_HEALTH_SCHEDULE, FUNCTIONS_REGION } from '../utils/env';
 
 const options: RuntimeOptions = {
-	timeoutSeconds: 540,
-	memory: '128MB',
+	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,
+	memory: RUNTIME_MEMORY_SIZE,
 };
 
-export const apiHealthCheck = functions
+export const checkApiHealth = functions
 	.region(FUNCTIONS_REGION)
 	.runWith(options)
-	.pubsub.schedule('*/10 * * * *')
+	.pubsub.schedule(CHECK_API_HEALTH_SCHEDULE)
 	.timeZone('Etc/GMT')
 	.onRun(async () => {
-		console.log('---apiHealthCheck start---');
+		console.log('---checkApiHealth start---');
 
 		try {
 			const response = await fetch(API_HEALTH_CHECK_URL);
@@ -31,6 +35,6 @@ export const apiHealthCheck = functions
 		} catch (e) {
 			throw new Error(`API health check failed: ${e}`);
 		} finally {
-			console.log('---apiHealthCheck end---');
+			console.log('---checkApiHealth end---');
 		}
 	});

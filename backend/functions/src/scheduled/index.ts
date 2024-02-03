@@ -1,2 +1,2 @@
 export { fetchAndStoreNews } from './fetchAndStoreNews';
-export { apiHealthCheck } from './apiHealthCheck';
+export { checkApiHealth } from './checkApiHealth';

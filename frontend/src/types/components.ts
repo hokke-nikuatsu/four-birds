@@ -18,6 +18,7 @@ export enum Colors {
 }
 
 export type NewsItem = {
+	articleId: string;
 	title: string;
 	description: string;
 	publishedDate: string;
@@ -29,4 +30,11 @@ export type NewsItem = {
 
 export type Loading = {
 	isLoading: boolean;
+};
+
+export type User = {
+	uid: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
 };

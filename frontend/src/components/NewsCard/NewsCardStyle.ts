@@ -25,11 +25,9 @@ export const Card = styled.div`
 `;
 
 export const CardLink = styled.a`
-	text-decoration: none;
 	color: inherit;
 
 	&:hover {
-		text-decoration: none;
 		color: inherit;
 	}
 `;
@@ -78,14 +76,6 @@ export const Description = styled.p`
 	overflow: hidden;
 	color: #666;
 	font-size: 0.8em;
-`;
-
-export const Link = styled.a`
-	color: #1e90ff;
-	text-decoration: none;
-	&:hover {
-		text-decoration: underline;
-	}
 `;
 
 export const DateAndPublisher = styled.div`

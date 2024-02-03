@@ -1,14 +1,15 @@
-import { type FetchNewsResponse, type ApiResponse, STATUS } from '../types/api';
-import { fetchApiAbortController, fetchApiTimeout } from '../utils/common';
-import { API_URL } from '../utils/environment';
+import {
+	type FetchNewsResponse,
+	type ApiResponse,
+	STATUS,
+} from '../../types/api';
+import { API_URL } from '../../utils/environment';
 
 export const fetchNews = async (
 	newsCount: number,
 ): Promise<FetchNewsResponse> => {
 	try {
-		const response = await fetch(`${API_URL}/news?offset=${newsCount}`, {
-			signal: fetchApiAbortController.signal,
-		});
+		const response = await fetch(`${API_URL}/news?offset=${newsCount}`);
 
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status}`);
@@ -24,11 +25,11 @@ export const fetchNews = async (
 			throw fetchNewsResponse;
 		}
 
-		return fetchNewsResponse.data;
+		const fetchNewsResponseData = fetchNewsResponse.data;
+
+		return fetchNewsResponseData;
 	} catch (e) {
 		console.error('Fetching news failed:', JSON.stringify(e));
 		throw e;
-	} finally {
-		clearTimeout(fetchApiTimeout);
 	}
 };
