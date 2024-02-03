@@ -12,16 +12,16 @@ export const StyledHeader = styled.header`
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 52px;
-	padding: 8px 0;
+	height: 68px;
+	padding: 0px 0;
 	background: #fff;
 	z-index: 100;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 export const LogoImage = styled.img`
-	width: 180px;
-	height: auto;
+	width: auto;
+	height: 48px;
 `;
 
 export const MenuIcon = styled.img`
