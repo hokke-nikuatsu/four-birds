@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
-export const NewsGrid = styled.div`
+export const StyledNewsGrid = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fill, 300px);
+	justify-content: center;
 	gap: 20px;
-	padding: 20px 240px;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 1200px;
+	margin: 0 auto;
+	max-width: calc(1200px + 480px);
 
-	@media (max-width: 1200px) {
+	@media (max-width: 1680px) {
 		padding: 20px;
 	}
 `;

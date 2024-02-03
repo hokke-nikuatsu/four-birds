@@ -60,12 +60,12 @@ const NewsList = () => {
 
 	return (
 		<>
-			<NewsGrid>
+			<StyledNewsGrid>
 				{newsItems &&
 					newsItems.map((newsItem) => (
 						<NewsCard key={newsItem.articleId} articleId={newsItem.articleId} />
 					))}
-			</NewsGrid>
+			</StyledNewsGrid>
 			{<Loading isLoading={isLoading} />}
 		</>
 	);
