@@ -8,9 +8,10 @@ export const StyledUser = styled.div`
 `;
 
 export const StyledUserLogin = styled.button`
+	width: 96px;
 	background-color: #1976d2;
 	color: white;
-	padding: 8px 16px;
+	padding: 8px 8px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -41,14 +42,8 @@ export const StyledUserLogout = styled(StyledUserLogin)`
 `;
 
 export const StyledUserIcon = styled.img`
-	width: 40px;
-	height: 40px;
+	width: 32px;
+	height: 32px;
 	border-radius: 50%;
-	margin-right: 10px;
-`;
-
-export const StyledUserName = styled.div`
-	display: inline;
-	margin-right: 20px;
-	vertical-align: middle;
+	margin-right: 12px;
 `;

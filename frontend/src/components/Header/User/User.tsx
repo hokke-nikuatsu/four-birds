@@ -5,7 +5,6 @@ import {
 	StyledUserIcon,
 	StyledUserLogin,
 	StyledUserLogout,
-	StyledUserName,
 } from './UserStyle';
 import { userAuthenticator } from '../../../App';
 import { signInUser, signOutUser } from '../../../services/redux/users/actions';
@@ -56,7 +55,6 @@ const User = () => {
 				(hasUserInfo ? (
 					<>
 						<StyledUserIcon src={user.photoUrl} alt="User Icon" />
-						<StyledUserName>{user.displayName}</StyledUserName>
 						<StyledUserLogout onClick={logout}>ログアウト</StyledUserLogout>
 					</>
 				) : (
