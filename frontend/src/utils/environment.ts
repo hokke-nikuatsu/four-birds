@@ -1,4 +1,3 @@
-// API
 const DEV_API_HOST = 'http://localhost:3001';
 const PROD_API_HOST = 'https://four-birds-backend.onrender.com';
 const API_ROOT = 'api';
