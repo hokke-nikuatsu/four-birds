@@ -1,12 +1,12 @@
 import { type Dispatch } from 'redux';
-import { type FetchNewsResponse } from 'types/api';
-import { fetchNews } from '../../../services/api/news';
+import { type FetchArticlesResponse } from 'types/api';
+import { fetchArticles } from '../../api/article';
 import { type FETCH_ARTICLES } from '../articles/types';
 
 export const fetchArticlesData =
 	(type: typeof FETCH_ARTICLES, offset: number) =>
-	async (dispatch: Dispatch): Promise<FetchNewsResponse> => {
-		const articles = await fetchNews(offset);
+	async (dispatch: Dispatch): Promise<FetchArticlesResponse> => {
+		const articles = await fetchArticles(offset);
 
 		dispatch({ type, payload: articles });
 

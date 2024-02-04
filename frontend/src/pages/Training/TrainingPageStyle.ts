@@ -4,7 +4,7 @@ export const StyledTrainingPage = styled.div`
 	padding-top: 60px;
 `;
 
-export const StyledSingleNewsGrid = styled.div`
+export const StyledSingleArticleGrid = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: start;

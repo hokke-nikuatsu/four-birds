@@ -1,12 +1,12 @@
-import { type NewsItem } from '../../../types/components';
+import { type Article } from '../../../types/components';
 
 export const FETCH_ARTICLES = 'FETCH_ARTICLES';
 
-export type ArticleState = NewsItem;
+export type ArticleState = Article;
 
 export type FetchArticles = {
 	type: typeof FETCH_ARTICLES;
-	payload: NewsItem[];
+	payload: Article[];
 };
 
 export type ArticlesActionTypes = FetchArticles;

@@ -17,13 +17,13 @@ import {
 	IconButton,
 	CardImageContainer,
 	CategoriesAndArrowContainer,
-} from './NewsCardStyle';
+} from './ArticleCardStyle';
 import { type AppState } from '../../services/store/store';
-import { type NewsItem } from '../../types/components';
+import { type Article } from '../../types/components';
 import { PATH_TO_PLACE_HOLDER_IMAGE } from '../../utils/common';
 
-const NewsCard: React.FC<{
-	articleId: NewsItem['articleId'];
+const ArticleCard: React.FC<{
+	articleId: Article['articleId'];
 	isChosen: boolean;
 }> = ({ articleId, isChosen }) => {
 	const navigate = useNavigate();
@@ -102,4 +102,4 @@ const NewsCard: React.FC<{
 	);
 };
 
-export default NewsCard;
+export default ArticleCard;

@@ -1,9 +1,9 @@
 import { StyledTopPage } from './TopPageStyle';
-import NewsList from '../../components/NewsList/NewsList';
+import ArticleList from '../../components/ArticleList/ArticleList';
 
 const TopPage = () => (
 	<StyledTopPage>
-		<NewsList />
+		<ArticleList />
 	</StyledTopPage>
 );
 

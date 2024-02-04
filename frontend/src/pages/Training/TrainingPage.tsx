@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { StyledSingleNewsGrid, StyledTrainingPage } from './TrainingPageStyle';
-import NewsCard from '../../components/NewsCard/NewsCard';
+import {
+	StyledSingleArticleGrid,
+	StyledTrainingPage,
+} from './TrainingPageStyle';
+import ArticleCard from '../../components/ArticleCard/ArticleCard';
 
 const TrainingPage = () => {
 	const { articleId } = useParams();
@@ -8,9 +11,9 @@ const TrainingPage = () => {
 
 	return (
 		<StyledTrainingPage>
-			<StyledSingleNewsGrid>
-				<NewsCard articleId={articleId} isChosen={true} />
-			</StyledSingleNewsGrid>
+			<StyledSingleArticleGrid>
+				<ArticleCard articleId={articleId} isChosen={true} />
+			</StyledSingleArticleGrid>
 		</StyledTrainingPage>
 	);
 };

@@ -17,7 +17,7 @@ export enum Colors {
 	'World' = '#D7CCC8',
 }
 
-export type NewsItem = {
+export type Article = {
 	articleId: string;
 	title: string;
 	description: string;

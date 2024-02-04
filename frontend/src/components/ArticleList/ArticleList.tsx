@@ -1,19 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
-import { NewsGrid } from './NewsListStyle';
-import { fetchArticles } from '../../services/redux/articles/actions';
+import { StyledArticleGrid } from './ArticleListStyle';
+import { fetchArticles as fetchArticlesAction } from '../../services/redux/articles/actions';
 import { useAppDispatch } from '../../services/store/store';
-import { type FetchNewsResponse } from '../../types/api';
+import { type FetchArticlesResponse } from '../../types/api';
 import { FETCH_ARTICLE_OFFSET } from '../../utils/common';
+import ArticleCard from '../ArticleCard/ArticleCard';
 import Loading from '../Loading/Loading';
-import NewsCard from '../NewsCard/NewsCard';
 
-const NewsList = () => {
-	const [newsItems, setNewsItems] = useState<FetchNewsResponse>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [pageIndex, setPageIndex] = useState<number>(0);
+const ArticleList = () => {
 	const dispatch = useAppDispatch();
 
-	const fetchNewsItems = useCallback(
+	const [articles, setArticles] = useState<FetchArticlesResponse>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [pageIndex, setPageIndex] = useState<number>(0);
+
+	const fetchArticles = useCallback(
 		async (start: number) => {
 			if (isLoading) {
 				return;
@@ -22,24 +23,25 @@ const NewsList = () => {
 			setIsLoading(true);
 
 			try {
-				const data = await dispatch(fetchArticles(start));
+				const data = await dispatch(fetchArticlesAction(start));
 
-				setNewsItems([...newsItems, ...data]);
+				setArticles([...articles, ...data]);
 				setPageIndex(pageIndex + FETCH_ARTICLE_OFFSET);
 			} catch (e) {
-				console.error('Fetch news items failed:', e);
+				console.error('Fetch articles failed:', e);
 
 				// TODO : Popup error messages
 			} finally {
 				setIsLoading(false);
 			}
 		},
-		[dispatch, isLoading, newsItems, pageIndex],
+		[dispatch, isLoading, articles, pageIndex],
 	);
 
 	useEffect(() => {
-		fetchNewsItems(pageIndex);
-		// Make empty the second argument to avoid reloading fetchNewsItems multiple times.
+		fetchArticles(pageIndex);
+
+		// Make empty the second argument to avoid reloading fetchArticles multiple times.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -49,26 +51,30 @@ const NewsList = () => {
 				window.innerHeight + document.documentElement.scrollTop >=
 				document.documentElement.offsetHeight - 10
 			) {
-				fetchNewsItems(pageIndex);
+				fetchArticles(pageIndex);
 			}
 		};
 
 		window.addEventListener('scroll', handleScroll);
 
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [fetchNewsItems, pageIndex]);
+	}, [fetchArticles, pageIndex]);
 
 	return (
 		<>
-			<StyledNewsGrid>
-				{newsItems &&
-					newsItems.map((newsItem) => (
-						<NewsCard key={newsItem.articleId} articleId={newsItem.articleId} />
+			<StyledArticleGrid>
+				{articles &&
+					articles.map((article) => (
+						<ArticleCard
+							key={article.articleId}
+							articleId={article.articleId}
+							isChosen={false}
+						/>
 					))}
-			</StyledNewsGrid>
+			</StyledArticleGrid>
 			{<Loading isLoading={isLoading} />}
 		</>
 	);
 };
 
-export default NewsList;
+export default ArticleList;

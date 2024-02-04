@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledNewsGrid = styled.div`
+export const StyledArticleGrid = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 300px);
 	justify-content: center;
