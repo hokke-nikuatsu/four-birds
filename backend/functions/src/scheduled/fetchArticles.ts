@@ -8,7 +8,10 @@ import { fetchArticlesLog } from '../shared/db/fetchArticlesLogs';
 import { fetchNews } from '../shared/news/newsdataIo';
 import { type Article } from '../types/news';
 import { RUNTIME_MEMORY_SIZE, RUNTIME_TIMEOUT_SECONDS } from '../utils/common';
-import { FUNCTIONS_REGION, FETCH_ARTICLES_SCHEDULE } from '../utils/env';
+import {
+	FUNCTIONS_REGION,
+	FETCH_ARTICLES_SCHEDULE,
+} from '../utils/environment';
 
 const options: RuntimeOptions = {
 	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,

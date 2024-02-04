@@ -10,7 +10,10 @@ import {
 	NeedsFullContent,
 	type Article,
 } from '../../types/news';
-import { NEWSDATA_IO_API_KEY, NEWSDATA_IO_API_URL } from '../../utils/env';
+import {
+	NEWSDATA_IO_API_KEY,
+	NEWSDATA_IO_API_URL,
+} from '../../utils/environment';
 import {
 	NEWS_DELAYED_TIME,
 	NEWS_FETCH_INTERVAL,

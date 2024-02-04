@@ -5,7 +5,10 @@ import {
 	RUNTIME_MEMORY_SIZE,
 	RUNTIME_TIMEOUT_SECONDS,
 } from '../utils/common';
-import { CHECK_API_HEALTH_SCHEDULE, FUNCTIONS_REGION } from '../utils/env';
+import {
+	CHECK_API_HEALTH_SCHEDULE,
+	FUNCTIONS_REGION,
+} from '../utils/environment';
 
 const options: RuntimeOptions = {
 	timeoutSeconds: RUNTIME_TIMEOUT_SECONDS,

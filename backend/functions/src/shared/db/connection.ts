@@ -1,5 +1,10 @@
 import mysql from 'mysql2/promise';
-import { DB_NAME, DB_PASSWORD, DB_URL, DB_USER_NAME } from '../../utils/env';
+import {
+	DB_NAME,
+	DB_PASSWORD,
+	DB_URL,
+	DB_USER_NAME,
+} from '../../utils/environment';
 
 export const dbConnection = async () => {
 	const dbPool = mysql.createPool({
