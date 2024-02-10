@@ -71,5 +71,9 @@ module.exports = {
 		},
 		compress: true,
 		port: 3000,
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'unsafe-none',
+			'Cross-Origin-Opener-Policy': 'same-origin',
+		},
 	},
 };
