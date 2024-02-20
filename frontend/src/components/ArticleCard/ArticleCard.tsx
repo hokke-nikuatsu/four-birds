@@ -24,8 +24,8 @@ import { PATH_TO_PLACE_HOLDER_IMAGE } from '../../utils/common';
 
 const ArticleCard: React.FC<{
 	articleId: Article['articleId'];
-	isChosen: boolean;
-}> = ({ articleId, isChosen }) => {
+	isSelectedArticle: boolean;
+}> = ({ articleId, isSelectedArticle }) => {
 	const navigate = useNavigate();
 	const handleViewDetails = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -88,7 +88,7 @@ const ArticleCard: React.FC<{
 							</Category>
 						))}
 					</Categories>
-					{!isChosen && (
+					{!isSelectedArticle && (
 						<IconButton
 							onClick={(e) => handleViewDetails(e)}
 							aria-label="move to training page"

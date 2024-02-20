@@ -12,7 +12,7 @@ const ArticleList = () => {
 
 	const [articles, setArticles] = useState<FetchArticlesResponse>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [pageIndex, setPageIndex] = useState<number>(0);
+	const [offset, setOffset] = useState<number>(0);
 
 	const fetchArticles = useCallback(
 		async (start: number) => {
@@ -26,7 +26,7 @@ const ArticleList = () => {
 				const data = await dispatch(fetchArticlesAction(start));
 
 				setArticles([...articles, ...data]);
-				setPageIndex(pageIndex + FETCH_ARTICLE_OFFSET);
+				setOffset(offset + FETCH_ARTICLE_OFFSET);
 			} catch (e) {
 				console.error('Fetch articles failed:', e);
 
@@ -35,11 +35,11 @@ const ArticleList = () => {
 				setIsLoading(false);
 			}
 		},
-		[dispatch, isLoading, articles, pageIndex],
+		[dispatch, isLoading, articles, offset],
 	);
 
 	useEffect(() => {
-		fetchArticles(pageIndex);
+		fetchArticles(offset);
 
 		// Make empty the second argument to avoid reloading fetchArticles multiple times.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,14 +51,14 @@ const ArticleList = () => {
 				window.innerHeight + document.documentElement.scrollTop >=
 				document.documentElement.offsetHeight - 10
 			) {
-				fetchArticles(pageIndex);
+				fetchArticles(offset);
 			}
 		};
 
 		window.addEventListener('scroll', handleScroll);
 
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [fetchArticles, pageIndex]);
+	}, [fetchArticles, offset]);
 
 	return (
 		<>
@@ -68,7 +68,7 @@ const ArticleList = () => {
 						<ArticleCard
 							key={article.articleId}
 							articleId={article.articleId}
-							isChosen={false}
+							isSelectedArticle={false}
 						/>
 					))}
 			</StyledArticleGrid>
