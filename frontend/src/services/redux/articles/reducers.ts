@@ -1,4 +1,3 @@
-// reducers.ts
 import {
 	type ArticleState,
 	type ArticlesActionTypes,
