@@ -2,6 +2,7 @@
 	"name": "frontend",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": ".",
 	"scripts": {
 		"start": "ENV=development webpack serve --open --mode development",
 		"build": "ENV=production webpack --mode production",
