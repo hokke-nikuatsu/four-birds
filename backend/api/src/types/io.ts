@@ -4,7 +4,7 @@ export enum STATUS {
 }
 
 export type ApiResponse<T> = {
-	status: 'success' | 'error';
+	status: STATUS;
 	data?: T;
 	message?: string;
 };
