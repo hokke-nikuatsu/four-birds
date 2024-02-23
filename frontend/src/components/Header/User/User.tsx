@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
 	StyledUser,
 	StyledUserIcon,
@@ -7,12 +7,16 @@ import {
 	StyledUserLogout,
 } from './UserStyle';
 import { userAuthenticator } from '../../../App';
-import { signInUser, signOutUser } from '../../../services/redux/users/actions';
-import { type AppState } from '../../../services/store/store';
+import {
+	deleteCsrfToken,
+	generateCsrfToken,
+} from '../../../services/api/users';
+import { signOutUser, updateUser } from '../../../services/redux/users/actions';
+import { useAppDispatch, type AppState } from '../../../services/store/store';
 
 const User = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const user = useSelector((state: AppState) => state.user);
 	const hasUserInfo = !!user.uid;
 
@@ -22,22 +26,41 @@ const User = () => {
 
 	const logout = async () => {
 		await userAuthenticator.signOutFromGoogleAccount();
+		localStorage.removeItem('userInfo');
+
+		await deleteCsrfToken(user);
 		dispatch(signOutUser());
 	};
 
 	useEffect(() => {
 		const checkRedirectResult = async () => {
+			const userInfo = localStorage.getItem('userInfo');
+
+			if (userInfo) {
+				const user = JSON.parse(userInfo);
+
+				await generateCsrfToken(user);
+				await dispatch(updateUser(user));
+
+				setIsLoading(false);
+
+				return;
+			}
+
 			try {
 				const googleUser = await userAuthenticator.handleRedirectResult();
 				if (googleUser) {
-					dispatch(
-						signInUser({
-							uid: googleUser.uid,
-							displayName: googleUser.displayName ?? '',
-							email: googleUser.email ?? '',
-							photoUrl: googleUser.photoURL ?? '',
-						}),
-					);
+					const userInfo = {
+						uid: googleUser.uid,
+						displayName: googleUser.displayName ?? '',
+						email: googleUser.email ?? '',
+						photoUrl: googleUser.photoURL ?? '',
+					};
+
+					localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+					await generateCsrfToken(userInfo);
+					dispatch(updateUser(userInfo));
 				}
 			} catch (e) {
 				console.error(e);
