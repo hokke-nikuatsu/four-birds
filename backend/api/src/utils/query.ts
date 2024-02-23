@@ -46,7 +46,7 @@ export const QUERY_CREATE_USER = `
         email, 
         photo_url,
         is_active,
-        last_logged_in_at,
+        logged_in_at,
         created_at
       )
   VALUES
@@ -60,7 +60,7 @@ export const QUERY_UPDATE_USER = `
     email = ?,
     photo_url = ?,
     is_active = ?,
-    last_logged_in_at = ?,
+    logged_in_at = ?,
     updated_at = ?
   WHERE
     user_id = ?;
