@@ -28,3 +28,40 @@ export const QUERY_SELECT_ARTICLES = `
     a.published_date DESC
   LIMIT 24 OFFSET ?;
 `;
+
+export const QUERY_SELECT_USER = `
+  SELECT 
+    COUNT(*) AS count
+  FROM 
+    users u
+  WHERE 
+    u.user_id = ?;
+`;
+
+export const QUERY_CREATE_USER = `
+  INSERT INTO
+    users
+      (
+        user_id,
+        email, 
+        photo_url,
+        is_active,
+        last_logged_in_at,
+        created_at
+      )
+  VALUES
+    (?, ?, ?, ?, ?, ?);
+`;
+
+export const QUERY_UPDATE_USER = `
+  UPDATE
+    users
+  SET
+    email = ?,
+    photo_url = ?,
+    is_active = ?,
+    last_logged_in_at = ?,
+    updated_at = ?
+  WHERE
+    user_id = ?;
+`;
