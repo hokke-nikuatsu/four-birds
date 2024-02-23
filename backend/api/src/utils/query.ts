@@ -7,7 +7,7 @@ export const QUERY_SELECT_ARTICLES = `
     a.url,
     a.ogp_url,
     p.display_name AS publisher_name,
-    GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ',') AS categories
+    GROUP_CONCAT(DISTINCT c.name ORDER BY c.name SEPARATOR ',') AS categories
   FROM 
     articles a
   JOIN 
