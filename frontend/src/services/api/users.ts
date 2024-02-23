@@ -4,7 +4,8 @@ import { API_URL } from '../../utils/environment';
 
 export const updateUser = async (user: User): Promise<ApiResponse<void>> => {
 	try {
-		const response = await fetch(`${API_URL}/user/${user.uid}`, {
+		const encodedUrl = encodeURI(`${API_URL}/user/${user.uid}`);
+		const response = await fetch(encodedUrl, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -36,7 +37,8 @@ export const generateCsrfToken = async (
 	user: User,
 ): Promise<ApiResponse<void>> => {
 	try {
-		const response = await fetch(`${API_URL}/user/${user.uid}`, {
+		const encodedUrl = encodeURI(`${API_URL}/user/${user.uid}`);
+		const response = await fetch(encodedUrl, {
 			method: 'GET',
 			credentials: 'include',
 		});
@@ -61,7 +63,8 @@ export const generateCsrfToken = async (
 
 export const deleteCsrfToken = async (user: User): Promise<void> => {
 	try {
-		const response = await fetch(`${API_URL}/user/${user.uid}`, {
+		const encodedUrl = encodeURI(`${API_URL}/user/${user.uid}`);
+		const response = await fetch(encodedUrl, {
 			method: 'DELETE',
 			credentials: 'include',
 		});

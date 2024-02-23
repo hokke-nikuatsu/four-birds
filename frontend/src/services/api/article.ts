@@ -9,7 +9,8 @@ export const fetchArticles = async (
 	articleCount: number,
 ): Promise<FetchArticlesResponse> => {
 	try {
-		const response = await fetch(`${API_URL}/article?offset=${articleCount}`, {
+		const encodedUrl = encodeURI(`${API_URL}/article?offset=${articleCount}`);
+		const response = await fetch(encodedUrl, {
 			method: 'GET',
 		});
 
