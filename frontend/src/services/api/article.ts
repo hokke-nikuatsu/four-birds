@@ -9,7 +9,9 @@ export const fetchArticles = async (
 	articleCount: number,
 ): Promise<FetchArticlesResponse> => {
 	try {
-		const response = await fetch(`${API_URL}/article?offset=${articleCount}`);
+		const response = await fetch(`${API_URL}/article?offset=${articleCount}`, {
+			method: 'GET',
+		});
 
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status}`);
