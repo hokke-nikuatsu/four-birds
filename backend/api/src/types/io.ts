@@ -3,6 +3,13 @@ export enum STATUS {
 	SUCCESS = 'success',
 }
 
+export type User = {
+	uid: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
+};
+
 export type ApiResponse<T> = {
 	status: STATUS;
 	data?: T;
@@ -23,3 +30,5 @@ export type FetchArticlesResponse = {
 	publisher_name: string;
 	categories: string[];
 }[];
+
+export type UpdateUserRequest = User;
