@@ -7,7 +7,7 @@ export const QUERY_INSERT_ARTICLE = `
 		articles
     	(article_id, title, description, published_date, url, ogp_url, publisher_id, is_valid, created_at)
   VALUES
-    (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `;
 export const QUERY_HAS_ARTICLE_ID = `
   SELECT
@@ -15,7 +15,7 @@ export const QUERY_HAS_ARTICLE_ID = `
   FROM
 		articles 
   WHERE
-		article_id = ? 
+		article_id = $1
   LIMIT
 		1
 `;
@@ -25,7 +25,7 @@ export const QUERY_INSERT_ARTICLE_CATEGORY = `
 		article_categories 
     	(article_id, category_id, created_at) 
   VALUES 
-    (?, ?, ?)
+    ($1, $2, $3)
 `;
 
 export const QUERY_SELECT_CATEGORY_ID = `
@@ -34,7 +34,7 @@ export const QUERY_SELECT_CATEGORY_ID = `
   FROM
 		categories 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -44,7 +44,7 @@ export const QUERY_HAS_CATEGORY = `
   FROM
 		categories 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -53,7 +53,7 @@ export const QUERY_INSERT_CATEGORY = `
 		categories 
   		(name, created_at) 
   VALUES 
-    (?, ?)
+    ($1, $2)
 `;
 
 export const QUERY_SELECT_PUBLISHER_ID = `
@@ -62,7 +62,7 @@ export const QUERY_SELECT_PUBLISHER_ID = `
   FROM
 		publishers 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -72,7 +72,7 @@ export const QUERY_HAS_PUBLISHER = `
   FROM
 		publishers 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -81,7 +81,7 @@ export const QUERY_INSERT_PUBLISHER = `
 		publishers 
     	(name, created_at) 
   VALUES 
-    (?, ?)
+    ($1, $2)
 `;
 
 export const QUERY_SELECT_COUNTRY_ID = `
@@ -90,7 +90,7 @@ export const QUERY_SELECT_COUNTRY_ID = `
   FROM
 		countries 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -100,7 +100,7 @@ export const QUERY_HAS_COUNTRY = `
   FROM
 		countries 
   WHERE
-		name = ? 
+		name = $1
   LIMIT
 		1
 `;
@@ -109,7 +109,7 @@ export const QUERY_INSERT_COUNTRY = `
 		countries 
     	(name, created_at) 
   VALUES 
-    (?, ?)
+    ($1, $2)
 `;
 
 export const QUERY_INSERT_ARTICLE_COUNTRY = `
@@ -117,7 +117,7 @@ export const QUERY_INSERT_ARTICLE_COUNTRY = `
 		article_countries 
     	(article_id, country_id, created_at) 
   VALUES 
-    (?, ?, ?)
+    ($1, $2, $3)
 `;
 
 export const QUERY_INSERT_FETCH_ARTICLES_LOG = `
@@ -125,5 +125,5 @@ export const QUERY_INSERT_FETCH_ARTICLES_LOG = `
 		fetch_article_logs 
     	(executed_date, article_count, status, created_at) 
   VALUES 
-    (?, ?, ?, ?)
+    ($1, $2, $3, $4)
 `;
