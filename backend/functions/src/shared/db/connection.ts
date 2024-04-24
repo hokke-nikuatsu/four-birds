@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise';
+import { Pool } from 'pg';
 import {
 	DB_NAME,
 	DB_PASSWORD,
@@ -7,7 +7,7 @@ import {
 } from '../../utils/environment';
 
 export const dbConnection = async () => {
-	const dbPool = mysql.createPool({
+	const dbPool = new Pool({
 		host: DB_URL,
 		user: DB_USER_NAME,
 		password: DB_PASSWORD,
@@ -16,7 +16,17 @@ export const dbConnection = async () => {
 			rejectUnauthorized: true,
 		},
 	});
-	const dbConnection = await dbPool.getConnection();
 
-	return dbConnection;
+	try {
+		const dbConnection = await dbPool.connect();
+		return dbConnection;
+	} catch (e) {
+		if (e instanceof Error) {
+			console.error('Database connection failed:', e.stack);
+		} else {
+			console.error('Database connection failed with unknown error.');
+		}
+
+		throw e;
+	}
 };
