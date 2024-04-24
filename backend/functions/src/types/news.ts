@@ -1,8 +1,3 @@
-export enum NeedsFullContent {
-	TRUE = '1',
-	FALSE = '0',
-}
-
 export enum NewsLanguage {
 	ENGLISH = 'en',
 	JAPANESE = 'jp',
@@ -29,7 +24,6 @@ export type NewsdataIoApiParams = {
 	language: NewsLanguage;
 	country: NewsCountry;
 	timezone: NewsTimezone;
-	full_content: string;
 	size: string;
 	nextPage?: string;
 };

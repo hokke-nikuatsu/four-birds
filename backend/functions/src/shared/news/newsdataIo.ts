@@ -7,7 +7,6 @@ import {
 	type NewsdataIoApiParams,
 	type NewsdataIoApiResponse,
 	NewsTimezone,
-	NeedsFullContent,
 	type Article,
 } from '../../types/news';
 import {
@@ -25,7 +24,6 @@ const baseParams: NewsdataIoApiParams = {
 	language: NewsLanguage.ENGLISH,
 	country: NewsCountry.JAPAN,
 	timezone: NewsTimezone.UNITED_KINGDOM,
-	full_content: NeedsFullContent.FALSE,
 	size: NEWS_SIZE,
 };
 
@@ -38,7 +36,6 @@ const createNewsdataIoApiParams = (
 		language: params.language,
 		country: params.country,
 		timezone: params.timezone,
-		full_content: params.full_content,
 		size: params.size,
 	});
 
