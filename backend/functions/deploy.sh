@@ -12,7 +12,7 @@ elif [ "$ENV" = "prod" ]; then
     echo "Deploying to production environment..."
     cp .env.prod .env
     PROJECT="four-birds-409101"
-    DEPLOY_CMD="firebase deploy --only functions:checkApiHealth,fetchArticles --project=$PROJECT"
+    DEPLOY_CMD="firebase deploy --only functions --project=$PROJECT"
 else
     echo "No environment is set."
     exit 1
