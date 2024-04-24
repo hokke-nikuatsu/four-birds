@@ -7,10 +7,12 @@ if [ "$ENV" = "dev" ]; then
     echo "Deploying to development environment..."
     cp .env.dev .env
     PROJECT="four-birds-dev"
+    DEPLOY_CMD="firebase deploy --only functions:fetchArticles --project=$PROJECT"
 elif [ "$ENV" = "prod" ]; then
     echo "Deploying to production environment..."
     cp .env.prod .env
     PROJECT="four-birds-409101"
+    DEPLOY_CMD="firebase deploy --only functions:checkApiHealth,fetchArticles --project=$PROJECT"
 else
     echo "No environment is set."
     exit 1
@@ -21,7 +23,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=$CREDENTIALS_PATH
 read -p "Do you continue? [y/N]: " CONFIRM
 if [[ $CONFIRM =~ ^[Yy]$ ]]; then
     tsc
-    firebase deploy --only functions --project=$PROJECT
+    eval $DEPLOY_CMD
 elif [[ $CONFIRM =~ ^[Nn]$ ]]; then
     echo "Deploying cancelled."
     exit 1
