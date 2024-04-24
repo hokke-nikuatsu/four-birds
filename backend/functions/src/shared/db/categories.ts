@@ -1,4 +1,4 @@
-import { type PoolConnection, type RowDataPacket } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import { type DBCategory, type DBInsertCountry } from '../../types/db';
 import {
 	QUERY_HAS_CATEGORY,
@@ -7,14 +7,12 @@ import {
 } from '../../utils/db';
 
 export const fetchCategoryId = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	category: DBCategory['name'],
 ): Promise<DBCategory['categoryId']> => {
-	const results = await connection.execute(QUERY_SELECT_CATEGORY_ID, [
-		category,
-	]);
+	const results = await connection.query(QUERY_SELECT_CATEGORY_ID, [category]);
 
-	const [rows] = results as RowDataPacket[];
+	const rows = results.rows;
 
 	if (!rows || rows.length !== 1) {
 		throw new Error('results from categories is invalid.');
@@ -26,21 +24,21 @@ export const fetchCategoryId = async (
 };
 
 export const hasCategoryInCategories = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	category: DBCategory['name'],
 ): Promise<boolean> => {
 	const result = await connection.query(QUERY_HAS_CATEGORY, [category]);
-	const [rows] = result as RowDataPacket[];
+	const rows = result.rows;
 
 	if (!rows) {
 		throw new Error('Selection of category_id failed.');
 	}
 
-	return rows.length;
+	return !!rows.length;
 };
 
 export const insertCategoryInCategories = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	category: DBCategory['name'],
 ): Promise<void> => {
 	const now = new Date();

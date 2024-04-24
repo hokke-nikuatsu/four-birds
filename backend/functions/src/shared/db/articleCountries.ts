@@ -1,4 +1,4 @@
-import { type PoolConnection } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import {
 	hasCountryInCountries,
 	insertCountryInCountries,
@@ -9,7 +9,7 @@ import { type Article } from '../../types/news';
 import { QUERY_INSERT_ARTICLE_COUNTRY } from '../../utils/db';
 
 export const storeArticleCountries = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	articleId: Article['article_id'],
 	countries: Article['country'],
 ) => {

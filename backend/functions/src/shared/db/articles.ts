@@ -1,4 +1,3 @@
-import { type RowDataPacket } from 'mysql2';
 import { storeArticleCategories } from './articleCategories';
 import { storeArticleCountries } from './articleCountries';
 import { dbConnection } from './connection';
@@ -21,7 +20,7 @@ import { obtainOgpUrls } from '../news/ogp';
 
 export const storeArticles = async (articles: Article[]): Promise<number> => {
 	const connection = await dbConnection();
-	connection.beginTransaction();
+	connection.query('BEGIN');
 
 	const articlesData: DBArticle[] = [];
 
@@ -79,7 +78,7 @@ export const storeArticles = async (articles: Article[]): Promise<number> => {
 			const articleId = article.article_id;
 
 			const result = await connection.query(QUERY_HAS_ARTICLE_ID, [articleId]);
-			const [rows] = result as RowDataPacket[];
+			const rows = result.rows;
 
 			if (!rows) {
 				throw new Error('Validation of articleId failed.');
@@ -127,7 +126,7 @@ export const storeArticles = async (articles: Article[]): Promise<number> => {
 			await connection.query(QUERY_INSERT_ARTICLE, Object.values(article));
 		}
 
-		await connection.commit();
+		await connection.query('COMMIT');
 
 		console.log(`Insert articles succeeded.`);
 
@@ -135,7 +134,7 @@ export const storeArticles = async (articles: Article[]): Promise<number> => {
 
 		return articleCount;
 	} catch (e) {
-		await connection.rollback();
+		await connection.query('ROLLBACK');
 
 		throw new Error(`Insert articles failed: ${e}`);
 	} finally {
@@ -149,8 +148,8 @@ export const obtainLatestPublishedDate = async (): Promise<
 	DBArticle['publishedDate']
 > => {
 	const connection = await dbConnection();
-	const results = await connection.execute(QUERY_LATEST_PUBLISHED_DATE);
-	const [rows] = results as RowDataPacket[];
+	const results = await connection.query(QUERY_LATEST_PUBLISHED_DATE);
+	const rows = results.rows;
 
 	if (!rows || rows.length !== 1) {
 		throw new Error('results from articles is invalid.');

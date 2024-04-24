@@ -1,4 +1,4 @@
-import { type PoolConnection, type RowDataPacket } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import { dbConnection } from './connection';
 import { type DBInsertPublisher, type DBPublisher } from '../../types/db';
 import { type Article } from '../../types/news';
@@ -21,10 +21,10 @@ export const fetchPublisherId = async (
 			await insertPublisherInPublishers(connection, publisher);
 		}
 
-		const result = await connection.execute(QUERY_SELECT_PUBLISHER_ID, [
+		const result = await connection.query(QUERY_SELECT_PUBLISHER_ID, [
 			publisher,
 		]);
-		const [rows] = result as RowDataPacket[];
+		const rows = result.rows;
 
 		if (!rows || rows.length !== 1) {
 			throw new Error('results from publishers is invalid.');
@@ -43,21 +43,21 @@ export const fetchPublisherId = async (
 };
 
 const hasPublisherInPublishers = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	publisher: DBPublisher['name'],
 ): Promise<boolean> => {
 	const result = await connection.query(QUERY_HAS_PUBLISHER, [publisher]);
-	const [rows] = result as RowDataPacket[];
+	const rows = result.rows;
 
 	if (!rows) {
 		throw new Error('Selection of publisher_id failed.');
 	}
 
-	return rows.length;
+	return !!rows.length;
 };
 
 const insertPublisherInPublishers = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	publisher: DBPublisher['name'],
 ): Promise<void> => {
 	const now = new Date();

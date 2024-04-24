@@ -1,4 +1,4 @@
-import { type RowDataPacket, type PoolConnection } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import { type User } from '../types/io';
 import {
 	QUERY_CREATE_USER,
@@ -7,14 +7,14 @@ import {
 } from '../utils/query';
 
 export const updateUser = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	user: User,
 ): Promise<void> => {
 	try {
 		const userId = user.uid;
 
 		const result = await connection.query(QUERY_SELECT_USER, [userId]);
-		const [rows] = result as RowDataPacket[];
+		const rows = result.rows;
 
 		if (!rows) {
 			throw new Error('Fetch user failed.');
@@ -47,7 +47,7 @@ export const updateUser = async (
 			await connection.query(QUERY_CREATE_USER, Object.values(userData));
 		}
 	} catch (e) {
-		await connection.rollback();
+		await connection.query('ROLLBACK');
 
 		throw new Error(`Update user failed: ${e}`);
 	} finally {

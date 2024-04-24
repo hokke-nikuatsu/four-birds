@@ -1,4 +1,4 @@
-import { type RowDataPacket, type PoolConnection } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import { type DBFetchArticles } from '../types/db';
 import { type FetchArticlesResponse } from '../types/io';
 import {
@@ -12,12 +12,12 @@ import {
 import { QUERY_SELECT_ARTICLES } from '../utils/query';
 
 export const fetchArticles = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	offSet: number,
 ): Promise<FetchArticlesResponse> => {
 	try {
 		const result = await connection.query(QUERY_SELECT_ARTICLES, [offSet]);
-		const [rows] = result as RowDataPacket[];
+		const rows = result.rows;
 
 		if (!rows) {
 			throw new Error('Fetching articles failed.');
@@ -42,7 +42,7 @@ export const fetchArticles = async (
 
 		return formattedArticles;
 	} catch (e) {
-		await connection.rollback();
+		await connection.query('ROLLBACK');
 
 		throw new Error(`Fetch articles failed: ${e}`);
 	} finally {

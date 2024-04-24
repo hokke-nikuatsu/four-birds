@@ -1,4 +1,4 @@
-import { type PoolConnection, type RowDataPacket } from 'mysql2/promise';
+import { type PoolClient } from 'pg';
 import { type DBInsertCountry, type DBCountry } from '../../types/db';
 import {
 	QUERY_HAS_COUNTRY,
@@ -7,14 +7,12 @@ import {
 } from '../../utils/db';
 
 export const fetchCountryId = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	country: DBCountry['name'],
 ): Promise<DBCountry['countryId']> => {
 	try {
-		const results = await connection.execute(QUERY_SELECT_COUNTRY_ID, [
-			country,
-		]);
-		const [rows] = results as RowDataPacket[];
+		const results = await connection.query(QUERY_SELECT_COUNTRY_ID, [country]);
+		const rows = results.rows;
 
 		if (!rows || rows.length !== 1) {
 			throw new Error('results from countries is invalid.');
@@ -33,21 +31,21 @@ export const fetchCountryId = async (
 };
 
 export const hasCountryInCountries = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	country: DBCountry['name'],
 ): Promise<boolean> => {
 	const result = await connection.query(QUERY_HAS_COUNTRY, [country]);
-	const [rows] = result as RowDataPacket[];
+	const rows = result.rows;
 
 	if (!rows) {
 		throw new Error('Selection of country_id failed.');
 	}
 
-	return rows.length;
+	return !!rows.length;
 };
 
 export const insertCountryInCountries = async (
-	connection: PoolConnection,
+	connection: PoolClient,
 	country: DBCountry['name'],
 ): Promise<void> => {
 	const now = new Date();
