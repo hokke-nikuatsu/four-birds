@@ -23,10 +23,6 @@ export const fetchCountryId = async (
 		return countryId;
 	} catch (e) {
 		throw new Error(`Error in fetchCountryId: ${e}`);
-	} finally {
-		if (connection) {
-			connection.release();
-		}
 	}
 };
 

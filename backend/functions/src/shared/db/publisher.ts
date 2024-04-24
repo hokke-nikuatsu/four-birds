@@ -35,10 +35,6 @@ export const fetchPublisherId = async (
 		return publisherId;
 	} catch (e) {
 		throw new Error(`Error in fetchPublisherId: ${e}`);
-	} finally {
-		if (connection) {
-			connection.release();
-		}
 	}
 };
 
