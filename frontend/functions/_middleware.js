@@ -55,13 +55,13 @@ async function handleRequest({ next, request }) {
 		const user = decoded.substring(0, index);
 		const pass = decoded.substring(index + 1);
 
-		if (BASIC_USER !== user) {
+		if (ENV.BASIC_USER !== user) {
 			return new Response('Invalid credentials.', {
 				status: 401,
 			});
 		}
 
-		if (BASIC_PASS !== pass) {
+		if (ENV.BASIC_PASS !== pass) {
 			return new Response('Invalid credentials.', {
 				status: 401,
 			});
