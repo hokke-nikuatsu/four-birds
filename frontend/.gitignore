@@ -1,6 +1,7 @@
 # dependencies
 /node_modules
 .yarn/*
+!.yarn/plugins/
 !.yarn/releases/
 !.yarn/releases/yarn-3.6.4.cjs
 
